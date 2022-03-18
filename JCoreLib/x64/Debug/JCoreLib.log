@@ -1,0 +1,4 @@
+﻿  JCoreLib.vcxproj -> D:\JBS\JDirect\JDirect\x64\Debug\JCoreLib.lib
+  지정된 파일을 찾을 수 없습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(155,5): error MSB3073: "copy "..\\..\\output\\JCoreLib.lib" "..\\..\\lib\\JCoreLib.lib"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(155,5): error MSB3073: :VCEnd" 명령이 종료되었습니다(코드: 1).

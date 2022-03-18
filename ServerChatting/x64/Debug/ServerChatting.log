@@ -1,0 +1,4 @@
+﻿  JSample.cpp
+D:\Study\Code\JDirect\ServerChatting\JSample.cpp(18,14): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+D:\Study\Code\JDirect\ServerChatting\JSample.cpp(79,16): warning C4996: 'inet_ntoa': Use inet_ntop() or InetNtop() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  ServerChatting.vcxproj -> D:\Study\Code\JDirect\x64\Debug\ServerChatting.exe

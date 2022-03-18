@@ -1,0 +1,72 @@
+---------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[AccountCreate](
+	@id NCHAR(20),
+	@pw NCHAR(20)
+	)
+AS
+	SET NOCOUNT ON
+	BEGIN TRY
+			declare @ret NCHAR(20)
+			select @ret = userid from gameuser where userid = @id
+			if(@ret <> N'') -- 같지 않을 시
+					begin
+						return 1;
+					end
+			else
+					begin
+						insert into gameuser(userid, userpw) values(@id,@pw)
+					end
+			return 0;
+
+	END TRY
+
+	BEGIN CATCH
+			RETURN 2;
+	END CATCH
+---------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[AllDataSelect]
+	--@param1 int = 0,
+	--@param2 int
+AS
+	SELECT id,userid,userpw,account,login,logout FROM gameuser
+---------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[LoginUser]
+	@id NCHAR(20),
+	@pw NCHAR(20)
+AS
+	SET NOCOUNT ON
+	Update gameuser set login=GETDATE() where userid=@id and userpw=@pw
+RETURN 0
+---------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[LogoutUser]
+	@id NCHAR(20)
+AS
+	SET NOCOUNT ON
+	Update gameuser set logout=GETDATE() where userid=@id
+RETURN 0
+---------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[UserDelete](
+	@id NCHAR(20),
+	@pw NCHAR(20)
+	)
+AS
+	SET NOCOUNT ON
+	BEGIN TRY
+			declare @ret int
+			select @ret = id from gameuser where userid = @id and userpw = @pw
+			if(@ret is null) -- 없을 경우
+					begin
+						return 1;
+					end
+			else
+					begin
+						Delete from gameuser Where id = @ret
+					end
+			return 0;
+
+	END TRY
+
+	BEGIN CATCH
+			RETURN 2;
+	END CATCH
+---------------------------------------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+
+//픽쉘쉐이더 픽셀마다 호출된다.
+float4 PS(float2 p : POSITION) : SV_TARGET
+{
+	//float1,float2,float3,float4
+	return float4(0,0,1,1);
+}

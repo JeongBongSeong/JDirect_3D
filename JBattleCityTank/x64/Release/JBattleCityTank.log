@@ -1,0 +1,28 @@
+﻿  JAttackObj2D.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JAttackObj2D.h(2,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'JObject2D.h': No such file or directory
+  JEffectObj.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JEffectObj.h(2,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'JObject2D.h': No such file or directory
+  JIntroWorld.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JIntroWorld.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JWorld.h': No such file or directory
+  JLoginWorld.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JLoginWorld.h(2,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'JWorld.h': No such file or directory
+  JMap.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JMap.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JStd.h': No such file or directory
+  JObjectNpc2D.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JObjectNpc2D.h(2,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'JObject2D.h': No such file or directory
+  JPlayerObj2D.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JPlayerObj2D.h(2,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'JObject2D.h': No such file or directory
+  JSprite.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JSprite.h(3,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JObject2D.h': No such file or directory
+  JTileMap.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JMap.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JStd.h': No such file or directory
+  JTileObj2D.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JTileObj2D.h(2,10): fatal error C1083: 포함 파일을 열 수 없습니다. 'JObject2D.h': No such file or directory
+  JUIModelMgr.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JUIModelMgr.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JBaseMgr.h': No such file or directory
+  JUIObject.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JUIModelMgr.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JBaseMgr.h': No such file or directory
+  JZoneWorld.cpp
+D:\Study\Code\JDirect\JBattleCityTank\JZoneWorld.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JWorld.h': No such file or directory
+  Sample.cpp
+D:\Study\Code\JDirect\JBattleCityTank\Sample.h(2,9): fatal error C1083: 포함 파일을 열 수 없습니다. 'JCore.h': No such file or directory

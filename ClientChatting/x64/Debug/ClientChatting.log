@@ -1,0 +1,3 @@
+﻿  JSample.cpp
+D:\Study\Code\JDirect\ClientChatting\JSample.cpp(25,23): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  ClientChatting.vcxproj -> D:\Study\Code\JDirect\x64\Debug\ClientChatting.exe

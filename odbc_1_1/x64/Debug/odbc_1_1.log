@@ -1,0 +1,8 @@
+﻿  sample.cpp
+D:\Study\Code\JDirect\odbc_1_1\sample.cpp(18,10): warning C4477: 'printf' : 서식 문자열 '%s'에 'char *' 형식의 인수가 필요하지만 variadic 인수 1의 형식이 'SQLTCHAR *'입니다.
+D:\Study\Code\JDirect\odbc_1_1\sample.cpp(18,10): message : 서식 문자열에서 '%ls'을(를) 사용하는 것이 좋습니다.
+D:\Study\Code\JDirect\odbc_1_1\sample.cpp(18,10): message : 서식 문자열에서 '%lls'을(를) 사용하는 것이 좋습니다.
+D:\Study\Code\JDirect\odbc_1_1\sample.cpp(18,10): message : 서식 문자열에서 '%Ls'을(를) 사용하는 것이 좋습니다.
+D:\Study\Code\JDirect\odbc_1_1\sample.cpp(18,10): message : 서식 문자열에서 '%ws'을(를) 사용하는 것이 좋습니다.
+D:\Study\Code\JDirect\odbc_1_1\sample.cpp(22,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+  odbc_1_1.vcxproj -> D:\Study\Code\JDirect\x64\Debug\odbc_1_1.exe
