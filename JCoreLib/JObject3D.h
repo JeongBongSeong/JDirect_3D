@@ -6,6 +6,7 @@ public:
 	JVector3 m_vPos;
 	JVector3 m_vDirection;
 	JVector4 m_vColor;
+	JMatrix	m_matWorld;
 public:
 	float  m_fAlpha = 0.0f;
 	bool   m_bFadeIn = false;
@@ -27,6 +28,8 @@ public:
 	};
 public:
 	virtual void UpdateData() {};
+	virtual void		SetMatrix(JMatrix* matWorld,
+		JMatrix* matView, JMatrix* matProj);
 public:
 	JObject3D();
 	virtual ~JObject3D();

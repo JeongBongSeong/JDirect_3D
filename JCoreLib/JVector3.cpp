@@ -1,4 +1,4 @@
-#include "JVector3.h"
+﻿#include "JVector3.h"
 JVector3::JVector3()
 {
 	x = y = z = 0.0f;
@@ -17,15 +17,15 @@ JVector3::JVector3(const JVector3& v)
 }
 void JVector3::operator += (const JVector3& v)
 {
-	this->x += v.x;
-	this->y += v.y;
-	this->z += v.z;
+	x += v.x;
+	y += v.y;
+	z += v.z;
 }
 void JVector3::operator -= (const JVector3& v)
 {
-	this->x -= v.x;
-	this->y -= v.y;
-	this->z -= v.z;
+	x -= v.x;
+	y -= v.y;
+	z -= v.z;
 }
 JVector3 JVector3::operator + (const JVector3& v)
 {
@@ -45,10 +45,11 @@ JVector3 JVector3::operator - (const JVector3& v)
 }
 JVector3 JVector3::operator * (float fValue)
 {
-	this->x *= fValue;
-	this->y *= fValue;
-	this->z *= fValue;
-	return *this;
+	JVector3 ret;
+	ret.x = x * fValue;
+	ret.y = y * fValue;
+	ret.z = z * fValue;
+	return ret;
 }
 JVector3 JVector3::operator / (float fValue)
 {
@@ -121,7 +122,7 @@ float JVector3::Length()
 
 float JVector3::operator | (JVector3 const& v)
 {
-	return x * v.x + y * v.y + z * v.z;
+	return (x * v.x) + (y * v.y) + (z * v.z);
 }
 
 JVector3 JVector3::operator ^ (JVector3 const& v)

@@ -1,16 +1,16 @@
 #pragma once
-#include"JCore.h"
-#include"JBoxObj.h"
-#include"JPlaneObj.h"
-
-
+#include "JCore.h"
+#include "JPlaneObj.h"
+#include "JCamera.h"
 class Sample : public JCore
 {
-	JPlaneObj m_Obj;
+	JCamera		    m_Camera;
+	JPlaneObj       m_MapObj;
+	JPlaneObj       m_PlayerObj;
+	JPlaneObj       m_ObjB;
 public:
 	virtual void	CreateResizeDevice(UINT iWidth, UINT iHeight) override;
 	virtual void	DeleteResizeDevice(UINT iWidth, UINT iHeight) override;
-public:
 	virtual bool	Init()  override;
 	virtual bool	Frame()  override;
 	virtual bool	Render()  override;
@@ -19,4 +19,3 @@ public:
 	Sample();
 	virtual ~Sample();
 };
-

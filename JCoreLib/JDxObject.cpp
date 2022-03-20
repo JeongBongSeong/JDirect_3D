@@ -213,16 +213,13 @@ bool	JDxObject::Frame()
 		*/
 	return true;
 }
-bool	JDxObject::Render()
+bool JDxObject::Render()
 {
-	if (m_pColorTex != nullptr)
-	{
-		m_pContext->PSSetShaderResources(0, 1, m_pColorTex->m_pSRV.GetAddressOf());
-	}
-	if (m_pMaskTex != nullptr)
-	{
-		m_pContext->PSSetShaderResources(1, 1, m_pMaskTex->m_pSRV.GetAddressOf());
-	}
+	PreRender();
+
+	m_pContext->UpdateSubresource(
+		m_pConstantBuffer, 0, NULL, &m_ConstantList, 0, 0);
+
 	m_pContext->GSSetShader(nullptr, NULL, 0);
 	m_pContext->HSSetShader(nullptr, NULL, 0);
 	m_pContext->DSSetShader(nullptr, NULL, 0);
@@ -234,43 +231,56 @@ bool	JDxObject::Render()
 	{
 		m_pContext->PSSetShader(m_pPShader->m_pPixelShader, NULL, 0);
 	}
-	
 
 	if (m_bAlphaBlend)
 	{
 		m_pContext->OMSetBlendState(JDxState::m_pAlphaBlend, 0, -1);
 	}
-	else 
+	else
 	{
 		m_pContext->OMSetBlendState(JDxState::m_pAlphaBlendDisable, 0, -1);
 	}
-	
 
 	m_pContext->IASetInputLayout(m_pVertexLayout);
-	
-	
-	UINT StartSlot = 0;
-	UINT NumBuffers = 1;
-	//UINT pStrides = sizeof(SimpleVertex);
-	UINT pStrides = sizeof(JVertex);
-	UINT pOffsets = 0;
-	// 1번째 인자 : 어느 그릇에 넣을것 이냐 ?
-	// 2번째 인자 : 버텍스버퍼에 몇개있냐 ? 
-	// 4번째 인자 : 하나의 정점의 크기
-	// 5번째 인자 : 시작 값
-	m_pContext->IASetVertexBuffers(StartSlot, NumBuffers, &m_pVertexBuffer, &pStrides, &pOffsets);
+
+
+	UINT StartSlot;
+	UINT NumBuffers;
+	UINT Strides = sizeof(JVertex);
+	UINT Offsets = 0;
+
+	m_pContext->IASetVertexBuffers(
+		0, 1, &m_pVertexBuffer,
+		&Strides, &Offsets);
 	m_pContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	m_pContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 	m_pContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
 	m_pContext->IASetPrimitiveTopology(
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
+		//D3D_PRIMITIVE_TOPOLOGY_POINTLIST
+		//D3D_PRIMITIVE_TOPOLOGY_LINELIST
 	);
-	if( m_IndexList.size() <= 0)
+
+	PostRender();
+	return true;
+}
+bool JDxObject::PreRender()
+{
+	if (m_pColorTex != nullptr)
+		m_pContext->PSSetShaderResources(0, 1,
+			m_pColorTex->m_pSRV.GetAddressOf());
+	if (m_pMaskTex != nullptr)
+		m_pContext->PSSetShaderResources(1, 1,
+			m_pMaskTex->m_pSRV.GetAddressOf());
+	return true;
+}
+bool JDxObject::PostRender()
+{
+	if (m_IndexList.size() <= 0)
 		m_pContext->Draw(m_VertexList.size(), 0);
 	else
 		m_pContext->DrawIndexed(m_IndexList.size(), 0, 0);
-
 	return true;
 }
 bool JDxObject::Release()
@@ -283,7 +293,6 @@ bool JDxObject::Release()
 	m_pIndexBuffer = nullptr;
 	m_pConstantBuffer = nullptr;
 	m_pVertexLayout = nullptr;
-
 	return true;
 }
 JDxObject::JDxObject()

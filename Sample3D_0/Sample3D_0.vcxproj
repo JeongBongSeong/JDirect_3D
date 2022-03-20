@@ -145,11 +145,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="JBoxObj.h" />
+    <ClInclude Include="JCamera.h" />
     <ClInclude Include="JPlaneObj.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JBoxObj.cpp" />
+    <ClCompile Include="JCamera.cpp" />
     <ClCompile Include="JPlaneObj.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
