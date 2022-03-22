@@ -96,7 +96,7 @@ bool JCore::CoreRender()
 
 bool JCore::CoreRelease()
 {
-    Release();
+    Release(); 
     JDxState::Release();
     m_dxWrite.Release();
     m_GameTimer.Release();
