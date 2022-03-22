@@ -54,6 +54,10 @@ bool JCore::CoreFrame()
     {
         m_bWireFrame = !m_bWireFrame;
     }
+    if (JInput::Get().GetKey(VK_F3) == KEY_PUSH)
+    {
+        m_bBack = !m_bBack;
+    }
     m_GameTimer.Frame();
     JInput::Get().Frame();
     I_ObjectMgr.Frame();
@@ -73,7 +77,8 @@ bool JCore::CoreRender()
     m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), color);
     m_pImmediateContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     m_pImmediateContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
-    m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSamplerState);
+
+    m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSLinear);
     m_pImmediateContext->OMSetDepthStencilState(JDxState::g_pDSSDepthEnable, 0x00);
     
     if (m_bWireFrame)

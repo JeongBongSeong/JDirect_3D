@@ -30,6 +30,9 @@
     <ClInclude Include="JMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="JSkyObj.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JBoxObj.cpp">
@@ -47,8 +50,12 @@
     <ClCompile Include="JMap.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="JSkyObj.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Box.hlsl" />
+    <FxCompile Include="Sky.hlsl" />
   </ItemGroup>
 </Project>

@@ -36,7 +36,7 @@ bool	Sample::Init()
 	}
 
 	m_PlayerObj.Init();
-	m_PlayerObj.m_pColorTex = pTex;
+	m_PlayerObj.m_pColorTex = I_Texture.Load(L"../../data/charport.bmp");
 	m_PlayerObj.m_pVShader = pVShader;
 	m_PlayerObj.m_pPShader = pPShader;
 	m_PlayerObj.SetPosition(JVector3(0.0f, 1.0f, 0.0f));
@@ -46,16 +46,15 @@ bool	Sample::Init()
 	}
 
 
-	m_ObjB.Init();
-	m_ObjB.m_pColorTex = I_Texture.Load(L"../../data/KGCABK.bmp");
-	m_ObjB.m_pVShader = pVShader;
-	m_ObjB.m_pPShader = pPShader;
-	if (!m_ObjB.Create(m_pd3dDevice.Get(),
-		m_pImmediateContext.Get()))
+	m_SkyObj.Init();
+	m_SkyObj.SetPosition(JVector3(0.0f, 0.0f, 0.0f));
+	if (!m_SkyObj.Create(m_pd3dDevice.Get(),
+		m_pImmediateContext.Get(),
+		L"sky.hlsl",
+		L"../../data/sky/xxx.bmp"))
 	{
 		return false;
 	}
-	m_ObjB.m_matWorld.Translation(1.0f, 0.0f, 0.0f);
 
 	// world
 	//TMatrix matRotate, matScale, matTrans;
@@ -68,19 +67,24 @@ bool	Sample::Frame()
 {
 	if (JInput::Get().GetKey('A') || JInput::Get().GetKey(VK_LEFT))
 	{
-		m_PlayerObj.m_vPos.x -= g_fSecPerFrame * 10.0f;
+		//m_PlayerObj.m_vPos.x -= g_fSecPerFrame * 10.0f;
+		m_PlayerObj.m_vPos -= m_PlayerObj.m_vRight * g_fSecPerFrame * 10.0f;
 	}
 	if (JInput::Get().GetKey('D') || JInput::Get().GetKey(VK_RIGHT))
 	{
-		m_PlayerObj.m_vPos.x += g_fSecPerFrame * 10.0f;
+		//m_PlayerObj.m_vPos.x += g_fSecPerFrame * 10.0f;
+		m_PlayerObj.m_vPos += m_PlayerObj.m_vRight * g_fSecPerFrame * 10.0f;
 	}
 	if (JInput::Get().GetKey('W') || JInput::Get().GetKey(VK_UP))
 	{
-		m_PlayerObj.m_vPos.z += g_fSecPerFrame * 10.0f;
+		//m_PlayerObj.m_vPos.z += g_fSecPerFrame * 10.0f;
+		m_PlayerObj.m_vPos += m_PlayerObj.m_vLook * g_fSecPerFrame * 10.0f;
 	}
 	if (JInput::Get().GetKey('S') || JInput::Get().GetKey(VK_DOWN))
 	{
-		m_PlayerObj.m_vPos.z -= g_fSecPerFrame * 10.0f;
+		//m_PlayerObj.m_vPos.z -= g_fSecPerFrame * 10.0f;
+		m_PlayerObj.m_vPos -= m_PlayerObj.m_vLook * g_fSecPerFrame * 10.0f;
+
 	}
 	if (JInput::Get().GetKey('R') || JInput::Get().GetKey(VK_UP))
 	{
@@ -90,10 +94,26 @@ bool	Sample::Frame()
 	{
 		m_PlayerObj.m_vPos.y -= g_fSecPerFrame * 10.0f;
 	}
+	JMatrix matRotate;
+	JMatrix matScale;
+	static float fRadian = 0.0f;
+	fRadian += (JInput::Get().m_ptDeltaMouse.x / (float)g_rtClient.right) * JBASIS_PI;
+	matRotate.YRotate(fRadian);
+
+	matScale.Scale(50, 50, 50);
+	m_PlayerObj.m_matWorld = matScale * matRotate;
+
+	m_PlayerObj.m_vPos.y = m_MapObj.GetHeight(m_PlayerObj.m_vPos.x, m_PlayerObj.m_vPos.z) + 50;
 	m_PlayerObj.SetPosition(m_PlayerObj.m_vPos);
 
 	m_Camera.m_vTarget = m_PlayerObj.m_vPos;
-	m_Camera.m_vCamera = m_PlayerObj.m_vPos + JVector3(0, 200.0f, -25.0f);
+	//m_Camera.m_vCamera = m_PlayerObj.m_vPos + JVector3(0, 10.0f, -25.0f);
+
+	float y = m_MapObj.GetHeight(m_Camera.m_vCamera.x, m_Camera.m_vCamera.z);
+	m_Camera.m_vCamera = m_PlayerObj.m_vPos +
+		m_PlayerObj.m_vLook * -1.0f * 10.0f +
+		m_PlayerObj.m_vUp * 10.0f;
+
 
 	m_Camera.Frame();
 	m_MapObj.Frame();
@@ -102,9 +122,27 @@ bool	Sample::Frame()
 }
 bool	Sample::Render()
 {
+
+	m_SkyObj.m_matViewSky = m_Camera.m_matView;
+	m_SkyObj.m_matViewSky._41 = 0;
+	m_SkyObj.m_matViewSky._42 = 0;
+	m_SkyObj.m_matViewSky._43 = 0;
+	JMatrix matRotation, matScale;
+	matScale.Scale(3000.0f, 3000.0f, 3000.0f);
+	matRotation.YRotate(g_fGameTimer * 0.00f);
+	m_SkyObj.m_matWorld = matScale * matRotation;
+	m_SkyObj.SetMatrix(NULL, &m_SkyObj.m_matViewSky, &m_Camera.m_matProj);
+	m_pImmediateContext->RSSetState(JDxState::g_pRSNoneCullSolid);
+	m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSPoint);
+	m_SkyObj.Render();
+
+
+	m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSLinear);
 	m_MapObj.SetMatrix(nullptr, &m_Camera.m_matView, &m_Camera.m_matProj);
 	m_MapObj.Render();
+
 	m_PlayerObj.SetMatrix(nullptr, &m_Camera.m_matView, &m_Camera.m_matProj);
+	
 	m_PlayerObj.Render();
 	/*m_ObjB.SetMatrix(nullptr, &m_Camera.m_matView, &m_Camera.m_matProj);
 	m_ObjB.Render();*/
@@ -118,6 +156,7 @@ bool	Sample::Render()
 }
 bool	Sample::Release()
 {
+	m_SkyObj.Release();
 	m_MapObj.Release();
 	m_PlayerObj.Release();
 	m_ObjB.Release();

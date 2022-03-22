@@ -7,6 +7,9 @@ public:
 	JVector3 m_vDirection;
 	JVector4 m_vColor;
 	JMatrix m_matWorld;
+	JVector3 m_vRight;
+	JVector3 m_vLook;
+	JVector3 m_vUp;
 public:
 	float  m_fAlpha = 0.0f;
 	bool   m_bFadeIn = false;

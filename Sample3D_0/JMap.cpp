@@ -20,7 +20,7 @@ bool JMap::CreateMap(UINT width, UINT height, float distance)
 	m_iNumCellRows = (height - 1);
 	m_iNumCellCols = (width - 1);
 	m_iNumFace = (height - 1)*(width - 1) *2;
-	m_iCellDistance = distance;
+	m_fCellDistance = distance;
 
 	// 전체 정점의 개수
 	m_iNumVertices = m_iNumCols * m_iNumRows;
@@ -88,6 +88,66 @@ bool JMap::CreateHeightMap(std::wstring filename)
 	return false;
 }
 
+float JMap::GetHeightMap(int row, int col)
+{
+	return m_VertexList[row * m_iNumRows + col].p.y;
+}
+
+float JMap::GetHeight(float fPosX, float fPosY)
+{
+	//해당 위치에 X 값을 찾아야한다.
+	//해당 위치의 Z 값을 찾아야한다.
+	// 2를 나누는 이유는 -2 ~ 2 이런식으로 저장되어 있기 때문이다.
+	float fCellX = (float)((m_iNumCellCols * m_fCellDistance) / 2) + fPosX;
+	float fCellZ = (float)((m_iNumCellRows * m_fCellDistance) / 2) + fPosY;
+	//m_fHeightList[]
+
+	fCellX /= (float)m_fCellDistance;
+	fCellZ /= (float)m_fCellDistance;
+
+	float fVertexCol = ::floorf(fCellX);
+	float fVertexRow = ::floorf(fCellZ);
+
+	// 높이맵 범위를 벗어나면 강제로 초기화 한다.
+	if (fVertexCol < 0.0f)  fVertexCol = 0.0f;
+	if (fVertexRow < 0.0f)  fVertexRow = 0.0f;
+	if ((float)(m_iNumCols - 2) < fVertexCol)	fVertexCol = (float)(m_iNumCols - 2);
+	if ((float)(m_iNumRows - 2) < fVertexRow)	fVertexRow = (float)(m_iNumRows - 2);
+	float A = GetHeightMap((int)fVertexRow, (int)fVertexCol);
+	float B = GetHeightMap((int)fVertexRow, (int)fVertexCol + 1);
+	float C = GetHeightMap((int)fVertexRow + 1, (int)fVertexCol);
+	float D = GetHeightMap((int)fVertexRow + 1, (int)fVertexCol + 1);
+
+	// A정점의 위치에서 떨어진 값(변위값)을 계산한다. 0 ~ 1.0f
+	float fDeltaX = fCellX - fVertexCol;
+	float fDeltaZ = fCellZ - fVertexRow;
+	// 보간작업를 위한 기준 페잇스를 찾는다. 
+	float fHeight = 0.0f;
+	// 윗페이스를 기준으로 보간한다.
+	// fDeltaZ + fDeltaX < 1.0f
+	if (fDeltaZ < (1.0f - fDeltaX))  //ABC
+	{
+		float uy = B - A; // A->B
+		float vy = C - A; // A->C	
+						  // 두 정점의 높이값의 차이를 비교하여 델타X의 값에 따라 보간값을 찾는다.		
+		fHeight = A + Lerp(0.0f, uy, fDeltaX) + Lerp(0.0f, vy, fDeltaZ);
+	}
+	// 아래페이스를 기준으로 보간한다.
+	else // DCB
+	{
+		float uy = C - D; // D->C
+		float vy = B - D; // D->B
+						  // 두 정점의 높이값의 차이를 비교하여 델타Z의 값에 따라 보간값을 찾는다.		
+		fHeight = D + Lerp(0.0f, uy, 1.0f - fDeltaX) + Lerp(0.0f, vy, 1.0f - fDeltaZ);
+	}
+	return fHeight;
+
+	return 0.0f;
+}
+float JMap::Lerp(float fStart, float fEnd, float fTangent)
+{
+	return fStart - (fStart * fTangent) + (fEnd * fTangent);
+}
 bool JMap::SetVertexData()
 {
 	//m_VertexList.resize(m_iNumVertices * 3);
@@ -119,9 +179,9 @@ bool JMap::SetVertexData()
 		for (int iCol = 0; iCol < m_iNumCols; iCol++)
 		{
 			iIndex = (iRow*m_iNumCols)+ iCol;
-			m_VertexList[iIndex].p.x = (iCol - hHalfCol)* m_iCellDistance;
+			m_VertexList[iIndex].p.x = (iCol - hHalfCol)* m_fCellDistance;
 			m_VertexList[iIndex].p.y = m_fHeightList[iIndex];
-			m_VertexList[iIndex].p.z = -(iRow - hHalfRow)* m_iCellDistance;
+			m_VertexList[iIndex].p.z = -(iRow - hHalfRow)* m_fCellDistance;
 			m_VertexList[iIndex].n = JVector3(0,1,0);
 			m_VertexList[iIndex].c = JVector4(randstep(0.0f, 1.0f),randstep(0.0f, 1.0f),randstep(0.0f, 1.0f), 1);
 			m_VertexList[iIndex].t = JVector2(ftxOffetU * iCol, ftxOffetV * iRow);

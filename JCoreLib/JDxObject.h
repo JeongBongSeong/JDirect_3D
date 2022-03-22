@@ -15,6 +15,20 @@ struct JVertex
 	JVector3 n;
 	JVector4 c;
 	JVector2 t;
+	JVertex(JVector3 p1,
+		JVector3 n1,
+		JVector4 c1,
+		JVector2 t1)
+	{
+		p = p1;
+		n = n1;
+		c = c1;
+		t = t1;
+	}
+	JVertex()
+	{
+
+	}
 };
 
 enum JCollisionType

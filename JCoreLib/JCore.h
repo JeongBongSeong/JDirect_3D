@@ -11,6 +11,7 @@ public:
 	JTimer m_GameTimer;
 	JWriteFont m_dxWrite;
 	bool m_bWireFrame = false;
+	bool m_bBack = false;
 	//float m_fColor[4];
 public:
 	//게임 반복 전 실행

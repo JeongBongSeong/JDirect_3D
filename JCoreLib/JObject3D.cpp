@@ -15,6 +15,15 @@ void JObject3D::SetMatrix(JMatrix* matWorld, JMatrix* matView, JMatrix* matProj)
 	{
 		m_ConstantList.matProj = matProj->Transpose();
 	}
+	m_vRight.x = m_matWorld._11;
+	m_vRight.y = m_matWorld._12;
+	m_vRight.z = m_matWorld._13;
+	m_vUp.x = m_matWorld._21;
+	m_vUp.y = m_matWorld._22;
+	m_vUp.z = m_matWorld._23;
+	m_vLook.x = m_matWorld._31;
+	m_vLook.y = m_matWorld._32;
+	m_vLook.z = m_matWorld._33;
 }
 
 void JObject3D::AddPosition(JVector3 vPos)
@@ -86,6 +95,15 @@ JObject3D::JObject3D()
 {
 	m_fAlpha = 1.0f;
 	m_vColor = JVector4(1, 1, 1, 1);
+	m_vRight.x = 1;
+	m_vRight.y = 0;
+	m_vRight.z = 0;
+	m_vUp.x = 0;
+	m_vUp.y = 1;
+	m_vUp.z = 0;
+	m_vLook.x = 0;
+	m_vLook.y = 0;
+	m_vLook.z = 1;
 }
 JObject3D::~JObject3D()
 {

@@ -5,6 +5,10 @@ class JCamera
 public:
 	JVector3			m_vCamera;
 	JVector3			m_vTarget;
+	JVector3			m_vDefaultUp;
+
+	JVector3			m_vRight;
+	JVector3			m_vLook;
 	JVector3			m_vUp;
 
 	JMatrix				m_matWorld;
