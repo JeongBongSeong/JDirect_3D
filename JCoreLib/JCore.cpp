@@ -50,6 +50,10 @@ bool JCore::GameRun()
 
 bool JCore::CoreFrame()
 {
+    if (JInput::Get().GetKey(VK_F2) == KEY_PUSH)
+    {
+        m_bWireFrame = !m_bWireFrame;
+    }
     m_GameTimer.Frame();
     JInput::Get().Frame();
     I_ObjectMgr.Frame();
@@ -66,15 +70,20 @@ bool JCore::CoreRender()
     m_fColor[2] = g_fBackGroundColor.z;
     m_fColor[3] = g_fBackGroundColor.w;*/
     float color[4] = { 0.1543f, 0.23421f, 0.4323f,1.0f };
-    m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), m_fColor);
+    m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), color);
     m_pImmediateContext->ClearDepthStencilView(m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     m_pImmediateContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
-    m_fColor[0] = g_fBackGroundColor.x;
-    m_fColor[1] = g_fBackGroundColor.y;
-    m_fColor[2] = g_fBackGroundColor.z;
-    m_fColor[3] = g_fBackGroundColor.w;
-    m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView.Get(), m_fColor);
     m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSamplerState);
+    m_pImmediateContext->OMSetDepthStencilState(JDxState::g_pDSSDepthEnable, 0x00);
+    
+    if (m_bWireFrame)
+    {
+        m_pImmediateContext->RSSetState(JDxState::g_pRSNoneCullSolid);
+    }
+    else
+    {
+        m_pImmediateContext->RSSetState(JDxState::g_pRSNoneCullWireFrame);
+    }
 
     Render();
     m_GameTimer.Render();

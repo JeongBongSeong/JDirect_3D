@@ -17,6 +17,9 @@
 #include"JCollision.h"
 #include <wrl.h> 
 #include"JMatrix.h"
+#include <DirectXMath.h>
+#include <DirectXPackedVector.h>
+#include <DirectXCollision.h>
 #pragma comment (lib,"d3d11.lib")
 #pragma comment (lib,"D3DCompiler.lib")
 #pragma comment (lib,"DirectXTK.lib")

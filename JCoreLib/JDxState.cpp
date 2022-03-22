@@ -3,8 +3,10 @@
 ID3D11BlendState* JDxState::m_pAlphaBlend = nullptr;
 ID3D11BlendState* JDxState::m_pAlphaBlendDisable = nullptr;
 ID3D11SamplerState* JDxState::m_pSamplerState = nullptr;
-ID3D11RasterizerState* JDxState::g_pRSBackCullSolid = nullptr;
+ID3D11RasterizerState* JDxState::g_pRSNoneCullSolid = nullptr;
+ID3D11RasterizerState* JDxState::g_pRSNoneCullWireFrame = nullptr;
 ID3D11DepthStencilState* JDxState::g_pDSSDepthEnable = nullptr;
+ID3D11DepthStencilState* JDxState::g_pDSSDepthDisable = nullptr;
 
 bool JDxState::SetState(ID3D11Device* pd3dDevice)
 {
@@ -44,8 +46,11 @@ bool JDxState::SetState(ID3D11Device* pd3dDevice)
 	rsDesc.DepthClipEnable = TRUE;
 	rsDesc.FillMode = D3D11_FILL_SOLID;
 	rsDesc.CullMode = D3D11_CULL_NONE;
-	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSBackCullSolid))) return hr;
+	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSNoneCullSolid))) return hr;
+	
 
+	rsDesc.FillMode = D3D11_FILL_WIREFRAME;
+	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSNoneCullWireFrame))) return hr;
 
 	D3D11_DEPTH_STENCIL_DESC dsDescDepth;
 	ZeroMemory(&dsDescDepth, sizeof(D3D11_DEPTH_STENCIL_DESC));
@@ -70,12 +75,20 @@ bool JDxState::SetState(ID3D11Device* pd3dDevice)
 	{
 		return hr;
 	}
+
+	dsDescDepth.DepthEnable = false;
+	if (FAILED(hr = pd3dDevice->CreateDepthStencilState(&dsDescDepth, &g_pDSSDepthDisable)))
+	{
+		return hr;
+	}
 	return true;
 }
 bool JDxState::Release()
 {
-	if (g_pRSBackCullSolid) g_pRSBackCullSolid->Release();
+	if (g_pRSNoneCullSolid) g_pRSNoneCullSolid->Release();
+	if (g_pRSNoneCullWireFrame) g_pRSNoneCullWireFrame->Release();
 	if (g_pDSSDepthEnable) g_pDSSDepthEnable->Release();
+	if (g_pDSSDepthDisable) g_pDSSDepthDisable->Release();
 	if (m_pAlphaBlend) m_pAlphaBlend->Release();
 	if (m_pAlphaBlendDisable) m_pAlphaBlendDisable->Release();
 	m_pAlphaBlend = nullptr;

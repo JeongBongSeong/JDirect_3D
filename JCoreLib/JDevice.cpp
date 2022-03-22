@@ -4,8 +4,8 @@ bool JDevice::CreateDetphStencilView()
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDSTexture = nullptr;
 	D3D11_TEXTURE2D_DESC DescDepth;
-	DescDepth.Width = g_rtClient.right;
-	DescDepth.Height = g_rtClient.bottom;
+	DescDepth.Width = m_SwapChainDesc.BufferDesc.Width;
+	DescDepth.Height = m_SwapChainDesc.BufferDesc.Height;
 	DescDepth.MipLevels = 1;
 	DescDepth.ArraySize = 1;
 	DescDepth.Format = DXGI_FORMAT_R24G8_TYPELESS;
@@ -128,6 +128,8 @@ bool	JDevice::CreateDevice()
 	{
 		return false;
 	}
+	DXGI_SWAP_CHAIN_DESC scd;
+	m_pSwapChain->GetDesc(&scd);
 	return true;
 }
 
@@ -139,6 +141,9 @@ bool JDevice::CreateRenderTargetView()
 	
 	
 	m_pImmediateContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), NULL);
+
+	D3D11_RENDER_TARGET_VIEW_DESC rtvd;
+	m_pRenderTargetView->GetDesc(&rtvd);
 	return true;
 }
 

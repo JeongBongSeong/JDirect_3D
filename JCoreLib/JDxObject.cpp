@@ -1,35 +1,37 @@
 #include "JDxObject.h"
 #include "JObjectMgr.h"
-void JDxObject::SetDevice(ID3D11Device* pd3dDevice, ID3D11DeviceContext* pContext)
+void JBaseObject::HitOverlap(JBaseObject* pObj, DWORD dwState)
+{
+}
+void JBaseObject::HitSelect(JBaseObject* pObj, DWORD dwState)
+{
+	int k = 0;
+}
+void    JDxObject::SetDevice(ID3D11Device* pd3dDevice,
+	ID3D11DeviceContext* pContext)
 {
 	m_pd3dDevice = pd3dDevice;
 	m_pContext = pContext;
 }
-
-bool JDxObject::LoadTexture(const TCHAR* szColorFileName, const TCHAR* szMaskFileName)
+bool    JDxObject::LoadTexture(const TCHAR* szColorFileName,
+	const TCHAR* szMaskFileName)
 {
 	m_pColorTex = I_Texture.Load(szColorFileName);
 	if (szMaskFileName != nullptr)
 	{
 		m_pMaskTex = I_Texture.Load(szMaskFileName);
 	}
-
 	m_TextureDesc = m_pColorTex->m_TextureDesc;
-
 	return true;
 }
-
-
 bool    JDxObject::SetVertexData()
 {
 	return true;
 }
-
 bool    JDxObject::SetIndexData()
 {
 	return true;
 }
-
 bool    JDxObject::SetConstantData()
 {
 	ZeroMemory(&m_ConstantList, sizeof(JConstantData));
@@ -46,45 +48,40 @@ bool    JDxObject::SetConstantData()
 	m_ConstantList.Timer.w = 0.0f;
 	return true;
 }
-
-bool JDxObject::CreateVertexShader(const TCHAR* szFile)
+bool    JDxObject::CreateVertexShader(const TCHAR* szFile)
 {
-	// 텍스트파일 쉐이더 사용
-	m_pVShader = I_Shader.CreateVertexShader(m_pd3dDevice, szFile, "VS");
-
-	return true;
-
-}
-bool JDxObject::CreatePixelShader(const TCHAR* szFile)
-{
-	m_pPShader = I_Shader.CreatePixelShader(m_pd3dDevice, szFile, "PS");
+	m_pVShader = I_Shader.CreateVertexShader(m_pd3dDevice,
+		szFile, "VS");
 	return true;
 }
-bool JDxObject::CreateVertexBuffer()
+bool    JDxObject::CreatePixelShader(const TCHAR* szFile)
+{
+	m_pPShader = I_Shader.CreatePixelShader(m_pd3dDevice,
+		szFile, "PS");
+	return true;
+}
+bool	JDxObject::CreateVertexBuffer()
 {
 	if (m_VertexList.size() <= 0) return false;
-	HRESULT hr = S_OK;
+	HRESULT hr;
+	//gpu메모리에 버퍼 할당(원하는 할당 크기)
 	D3D11_BUFFER_DESC bd;
-	{
-		ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
-		bd.ByteWidth = sizeof(JVertex) * m_VertexList.size();		//이 크기에 메모리를 1
-		bd.Usage = D3D11_USAGE_DEFAULT;				//GPU에 할당한다.    3
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;	//버텍스 버퍼용으로  2
-	}
-	D3D11_SUBRESOURCE_DATA sd;
-	{
-		ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
-		sd.pSysMem = &m_VertexList.at(0);
-	}
+	ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
+	bd.ByteWidth = sizeof(JVertex) * m_VertexList.size();
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-	if (FAILED(hr = m_pd3dDevice->CreateBuffer(&bd, &sd, &m_pVertexBuffer)))	//할당과 데이터를 같이 넣겟다.!
+	D3D11_SUBRESOURCE_DATA sd;
+	ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
+	sd.pSysMem = &m_VertexList.at(0);
+
+	if (FAILED(hr = m_pd3dDevice->CreateBuffer(&bd, &sd, &m_pVertexBuffer)))
 	{
 		return false;
 	}
 	return true;
 }
-
-bool JDxObject::CreateIndexBuffer()
+bool	JDxObject::CreateIndexBuffer()
 {
 	HRESULT hr;
 	if (m_IndexList.size() <= 0) return true;
@@ -105,7 +102,6 @@ bool JDxObject::CreateIndexBuffer()
 	}
 	return true;
 }
-
 bool	JDxObject::CreateConstantBuffer()
 {
 	HRESULT hr;
@@ -126,9 +122,11 @@ bool	JDxObject::CreateConstantBuffer()
 	}
 	return true;
 }
-
-bool JDxObject::CreateInputLayout()
+bool	JDxObject::CreateInputLayout()
 {
+
+	// 정점쉐이더의 결과를 통해서 정점레이아웃을 생성한다.	
+	// 정점버퍼의 각 정점의 어떤 성분을 정점쉐이더에 전달할 거냐
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{"POSITION",0, DXGI_FORMAT_R32G32B32_FLOAT, 0,0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -136,22 +134,27 @@ bool JDxObject::CreateInputLayout()
 		{"COLOR",0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,24,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{"TEXCOORD",0, DXGI_FORMAT_R32G32_FLOAT, 0,40,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
-	UINT numLayout = sizeof(layout) / sizeof(layout[0]);
-	HRESULT hr = m_pd3dDevice->CreateInputLayout(layout, numLayout,
+	UINT NumElements = sizeof(layout) / sizeof(layout[0]);
+	HRESULT hr = m_pd3dDevice->CreateInputLayout(
+		layout,
+		NumElements,
 		m_pVShader->m_pVSCodeResult->GetBufferPointer(),
 		m_pVShader->m_pVSCodeResult->GetBufferSize(),
 		&m_pVertexLayout);
-
-	if (FAILED(hr)) return false;
+	if (FAILED(hr))
+	{
+		return false;
+	}
 	return true;
 }
-
-bool JDxObject::Create(ID3D11Device* pd3dDevice,	ID3D11DeviceContext* pContext, const TCHAR* szShaderFileName, const TCHAR* szColorFileName, const TCHAR* szMaskFileName)
+bool	JDxObject::Create(ID3D11Device* pd3dDevice,
+	ID3D11DeviceContext* pContext,
+	const TCHAR* szShaderFileName,
+	const TCHAR* szColorFileName,
+	const TCHAR* szMaskFileName)
 {
-
 	HRESULT hr;
 	SetDevice(pd3dDevice, pContext);
-
 	if (szColorFileName != nullptr && !LoadTexture(szColorFileName, szMaskFileName))
 	{
 		return false;
@@ -180,11 +183,13 @@ bool JDxObject::Create(ID3D11Device* pd3dDevice,	ID3D11DeviceContext* pContext, 
 	{
 		return false;
 	}
-	if (szShaderFileName != nullptr && !CreateVertexShader(szShaderFileName))
+	if (szShaderFileName != nullptr &&
+		!CreateVertexShader(szShaderFileName))
 	{
 		return false;
 	}
-	if (szShaderFileName != nullptr && !CreatePixelShader(szShaderFileName))
+	if (szShaderFileName != nullptr &&
+		!CreatePixelShader(szShaderFileName))
 	{
 		return false;
 	}
@@ -192,37 +197,24 @@ bool JDxObject::Create(ID3D11Device* pd3dDevice,	ID3D11DeviceContext* pContext, 
 	{
 		return false;
 	}
-
 	return true;
 }
 bool	JDxObject::Init()
 {
+
 	return true;
 }
 bool	JDxObject::Frame()
 {
-	/*int iNum = 10;
-	m_VertexList[0].v.x += m_fSpeed*iNum;
-	m_VertexList[1].v.x += m_fSpeed*iNum;
-	m_VertexList[2].v.x += m_fSpeed*iNum;
-	m_VertexList[3].v.x += m_fSpeed*iNum;
-	m_VertexList[4].v.x += m_fSpeed*iNum;
-	m_VertexList[5].v.x += m_fSpeed*iNum;
-	m_pContext->UpdateSubresource(
-		m_pVertexBuffer, 0, NULL, &m_VertexList.at(0), 0, 0);
-		*/
 	return true;
 }
 bool	JDxObject::Render()
 {
-	if (m_pColorTex != nullptr)
-	{
-		m_pContext->PSSetShaderResources(0, 1, m_pColorTex->m_pSRV.GetAddressOf());
-	}
-	if (m_pMaskTex != nullptr)
-	{
-		m_pContext->PSSetShaderResources(1, 1, m_pMaskTex->m_pSRV.GetAddressOf());
-	}
+	PreRender();
+
+	m_pContext->UpdateSubresource(
+		m_pConstantBuffer, 0, NULL, &m_ConstantList, 0, 0);
+
 	m_pContext->GSSetShader(nullptr, NULL, 0);
 	m_pContext->HSSetShader(nullptr, NULL, 0);
 	m_pContext->DSSetShader(nullptr, NULL, 0);
@@ -234,46 +226,59 @@ bool	JDxObject::Render()
 	{
 		m_pContext->PSSetShader(m_pPShader->m_pPixelShader, NULL, 0);
 	}
-	
 
 	if (m_bAlphaBlend)
 	{
 		m_pContext->OMSetBlendState(JDxState::m_pAlphaBlend, 0, -1);
 	}
-	else 
+	else
 	{
 		m_pContext->OMSetBlendState(JDxState::m_pAlphaBlendDisable, 0, -1);
 	}
-	
 
 	m_pContext->IASetInputLayout(m_pVertexLayout);
-	
-	
-	UINT StartSlot = 0;
-	UINT NumBuffers = 1;
-	//UINT pStrides = sizeof(SimpleVertex);
-	UINT pStrides = sizeof(JVertex);
-	UINT pOffsets = 0;
-	// 1번째 인자 : 어느 그릇에 넣을것 이냐 ?
-	// 2번째 인자 : 버텍스버퍼에 몇개있냐 ? 
-	// 4번째 인자 : 하나의 정점의 크기
-	// 5번째 인자 : 시작 값
-	m_pContext->IASetVertexBuffers(StartSlot, NumBuffers, &m_pVertexBuffer, &pStrides, &pOffsets);
+
+
+	UINT StartSlot;
+	UINT NumBuffers;
+	UINT Strides = sizeof(JVertex);
+	UINT Offsets = 0;
+
+	m_pContext->IASetVertexBuffers(
+		0, 1, &m_pVertexBuffer,
+		&Strides, &Offsets);
 	m_pContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	m_pContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 	m_pContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
 	m_pContext->IASetPrimitiveTopology(
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
+		//D3D_PRIMITIVE_TOPOLOGY_POINTLIST
+		//D3D_PRIMITIVE_TOPOLOGY_LINELIST
 	);
-	if( m_IndexList.size() <= 0)
+
+	PostRender();
+	return true;
+}
+bool	JDxObject::PreRender()
+{
+	if (m_pColorTex != nullptr)
+		m_pContext->PSSetShaderResources(0, 1,
+			m_pColorTex->m_pSRV.GetAddressOf());
+	if (m_pMaskTex != nullptr)
+		m_pContext->PSSetShaderResources(1, 1,
+			m_pMaskTex->m_pSRV.GetAddressOf());
+	return true;
+}
+bool	JDxObject::PostRender()
+{
+	if (m_IndexList.size() <= 0)
 		m_pContext->Draw(m_VertexList.size(), 0);
 	else
 		m_pContext->DrawIndexed(m_IndexList.size(), 0, 0);
-
 	return true;
 }
-bool JDxObject::Release()
+bool	JDxObject::Release()
 {
 	if (m_pVertexBuffer) m_pVertexBuffer->Release();
 	if (m_pIndexBuffer) m_pIndexBuffer->Release();
@@ -283,22 +288,13 @@ bool JDxObject::Release()
 	m_pIndexBuffer = nullptr;
 	m_pConstantBuffer = nullptr;
 	m_pVertexLayout = nullptr;
-
 	return true;
 }
 JDxObject::JDxObject()
 {
 	m_fSpeed = 0.0001f;
 }
-JDxObject::~JDxObject() 
-{
-}
-
-void JBaseObject::HitOverlap(JBaseObject* pObj, DWORD dwState)
-{
-	int k = 0;
-}
-void JBaseObject::HitSelect(JBaseObject* pObj, DWORD dwState)
+JDxObject::~JDxObject()
 {
 
 }

@@ -37,7 +37,8 @@ VS_OUTPUT VS(VS_INPUT v)
 	pOut.p = vProj;
 	pOut.n = v.n;
 	pOut.t = v.t;
-	pOut.c = v.c;
+	float fDot = max(0, dot(pOut.n, -Color0.xyz));
+	pOut.c = float4(fDot,fDot,fDot,1);
 	return pOut;
 }
 
@@ -50,7 +51,7 @@ float4 PS(VS_OUTPUT input) : SV_TARGET
 	float4 color = g_txColor.Sample(g_Sample, input.t);
 	float4 mask = g_txMask.Sample(g_Sample, input.t);
 	float4 final = color;
-	//final = final * input.c;
+	final = final * input.c;
 	final.a = 1.0f;// -mask.r;
 	return final;
 }

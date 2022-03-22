@@ -135,7 +135,6 @@ public:
 	ID3D11Buffer* m_pConstantBuffer = nullptr;
 
 	ID3D11InputLayout* m_pVertexLayout = nullptr;
-
 	ID3D11Device* m_pd3dDevice;
 	ID3D11DeviceContext* m_pContext = nullptr;
 
@@ -156,7 +155,9 @@ public:
 public:
 	virtual bool	Init();
 	virtual bool	Frame();
+	virtual bool	PreRender();
 	virtual bool	Render();
+	virtual bool	PostRender();
 	virtual bool	Release();
 public:
 	JDxObject();
