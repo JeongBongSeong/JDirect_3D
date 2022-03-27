@@ -187,7 +187,7 @@ bool JMap::SetVertexData()
 		{
 			int iIndex = (iRow*m_iNumCols)+ iCol;
 			m_VertexList[iIndex].p.x = (iCol - hHalfCol)* m_fCellDistance;
-			m_VertexList[iIndex].p.y = 0.0f;// m_fHeightList[iIndex];
+			m_VertexList[iIndex].p.y = m_fHeightList[iIndex];
 			m_VertexList[iIndex].p.z = -(iRow - hHalfRow)* m_fCellDistance;
 			m_VertexList[iIndex].n = T::TVector3(0,1,0);
 			m_VertexList[iIndex].c = T::TVector4(randstep(0.0f, 1.0f),randstep(0.0f, 1.0f),randstep(0.0f, 1.0f), 1);

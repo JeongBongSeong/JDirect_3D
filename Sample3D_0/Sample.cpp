@@ -25,7 +25,7 @@ bool	Sample::Init()
 	m_Camera.CreateViewMatrix(T::TVector3(0, 300.0f, -100.0f),
 		T::TVector3(0, 0.0f, 0));
 	m_Camera.CreateProjMatrix(XM_PI * 0.25f,
-		(float)g_rtClient.right / (float)g_rtClient.bottom, 0.1f, 1000.0f);
+		(float)g_rtClient.right / (float)g_rtClient.bottom, 0.1f, 10000.0f);
 	m_Camera.m_pColorTex = I_Texture.Load(L"../../data/charport.bmp");
 	m_Camera.m_pVShader = I_Shader.CreateVertexShader(
 		m_pd3dDevice.Get(), L"Box.hlsl", "VSColor");;
@@ -237,8 +237,8 @@ bool	Sample::Render()
 		}
 	}
 
-	//m_Camera.SetMatrix(nullptr, &m_CameraTopView.m_matView,
-	//	&m_CameraTopView.m_matProj);
+	m_Camera.SetMatrix(nullptr, &m_CameraTopView.m_matView,
+		&m_CameraTopView.m_matProj);
 	m_Camera.Render();
 
 
