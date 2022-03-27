@@ -4,7 +4,7 @@
 struct JFace
 {
 	UINT v0, v1, v2; // vb index;
-	JVector3 vNormal; // vb index;
+	T::TVector3 vNormal; // vb index;
 };
 
 class JMap : public JObject3D
@@ -23,7 +23,7 @@ public:
 	virtual bool CreateMap(UINT width, UINT height, float distance);
 	virtual bool CreateHeightMap(std::wstring filename);
 	virtual float GetHeightMap(int row, int col);
-	virtual float GetHeight(float fPosX, float fPosY);
+	virtual float GetHeight(float fPosX, float fPosZ);
 	virtual float Lerp(float fStart, float fEnd, float fTangent);
 	virtual bool SetVertexData();
 	virtual bool SetIndexData();

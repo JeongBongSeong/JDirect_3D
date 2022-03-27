@@ -3,7 +3,7 @@
 class JSkyObj : public JObject3D
 {
 public:
-	JMatrix m_matViewSky;
+	T::TMatrix m_matViewSky;
 	JTexture* m_pTexArray[6];
 public:
 	virtual bool		LoadTexture(const TCHAR* szColorFileName, const TCHAR* szMaskFileName);

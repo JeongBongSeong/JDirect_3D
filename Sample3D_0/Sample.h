@@ -8,11 +8,11 @@
 
 class Sample : public JCore
 {
-	JCamera		    m_Camera;
-	JMap	       m_MapObj;
+	JCamera m_Camera;
+	JCamera m_CameraTopView;
+	JMap m_MapObj;
 	JBoxObj m_PlayerObj;
-	JPlaneObj       m_ObjB;
-
+	std::vector<JBoxObj> m_ObjList;
 	JSkyObj       m_SkyObj;
 public:
 	virtual void	CreateResizeDevice(UINT iWidth, UINT iHeight) override;

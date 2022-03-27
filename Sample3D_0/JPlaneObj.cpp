@@ -8,27 +8,27 @@ bool		JPlaneObj::SetVertexData()
 	//  2        3
 	m_VertexList.resize(4);
 	// -Z plane
-	m_VertexList[0].p = JVector3(-1.0f, 1.0f, 0.0f);
-	m_VertexList[0].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[0].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[0].t = JVector2(0.0f, 0.0f);
+	m_VertexList[0].p = T::TVector3(-1.0f, 1.0f, 0.0f);
+	m_VertexList[0].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[0].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[0].t = T::TVector2(0.0f, 0.0f);
 
-	m_VertexList[1].p = JVector3(1.0f, 1.0f, 0.0f);
-	m_VertexList[1].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[1].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[1].t = JVector2(1.0f, 0.0f);
-
-
-	m_VertexList[2].p = JVector3(-1.0f, -1.0f, 0.0f);
-	m_VertexList[2].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[2].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[2].t = JVector2(0.0f, 1.0f);
+	m_VertexList[1].p = T::TVector3(1.0f, 1.0f, 0.0f);
+	m_VertexList[1].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[1].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[1].t = T::TVector2(1.0f, 0.0f);
 
 
-	m_VertexList[3].p = JVector3(1.0f, -1.0f, 0.0f);
-	m_VertexList[3].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[3].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[3].t = JVector2(1.0f, 1.0f);
+	m_VertexList[2].p = T::TVector3(-1.0f, -1.0f, 0.0f);
+	m_VertexList[2].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[2].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[2].t = T::TVector2(0.0f, 1.0f);
+
+
+	m_VertexList[3].p = T::TVector3(1.0f, -1.0f, 0.0f);
+	m_VertexList[3].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[3].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[3].t = T::TVector2(1.0f, 1.0f);
 	return true;
 }
 bool		JPlaneObj::SetIndexData()

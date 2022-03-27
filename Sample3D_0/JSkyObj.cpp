@@ -19,39 +19,39 @@ bool		JSkyObj::SetVertexData()
 
 	int index = 0;
 	m_VertexList.resize(24);
-	m_VertexList[0] = JVertex(JVector3(-1.0f, 1.0f, -1.0f), JVector3(0.0f, 0.0f, -1.0f), JVector4(1.0f, 0.0f, 0.0f, 1.0f), JVector2(0.0f, 0.0f));
-	m_VertexList[1] = JVertex(JVector3(1.0f, 1.0f, -1.0f), JVector3(0.0f, 0.0f, -1.0f), JVector4(1.0f, 0.0f, 0.0f, 1.0f), JVector2(1.0f, 0.0f));
-	m_VertexList[2] = JVertex(JVector3(1.0f, -1.0f, -1.0f), JVector3(0.0f, 0.0f, -1.0f), JVector4(1.0f, 0.0f, 0.0f, 1.0f), JVector2(1.0f, 1.0f));
-	m_VertexList[3] = JVertex(JVector3(-1.0f, -1.0f, -1.0f), JVector3(0.0f, 0.0f, -1.0f), JVector4(1.0f, 0.0f, 0.0f, 1.0f), JVector2(0.0f, 1.0f));
+	m_VertexList[0] = JVertex(T::TVector3(-1.0f, 1.0f, -1.0f), T::TVector3(0.0f, 0.0f, -1.0f), T::TVector4(1.0f, 0.0f, 0.0f, 1.0f), T::TVector2(0.0f, 0.0f));
+	m_VertexList[1] = JVertex(T::TVector3(1.0f, 1.0f, -1.0f), T::TVector3(0.0f, 0.0f, -1.0f), T::TVector4(1.0f, 0.0f, 0.0f, 1.0f), T::TVector2(1.0f, 0.0f));
+	m_VertexList[2] = JVertex(T::TVector3(1.0f, -1.0f, -1.0f), T::TVector3(0.0f, 0.0f, -1.0f), T::TVector4(1.0f, 0.0f, 0.0f, 1.0f), T::TVector2(1.0f, 1.0f));
+	m_VertexList[3] = JVertex(T::TVector3(-1.0f, -1.0f, -1.0f), T::TVector3(0.0f, 0.0f, -1.0f), T::TVector4(1.0f, 0.0f, 0.0f, 1.0f), T::TVector2(0.0f, 1.0f));
 	// µÞ¸é
-	m_VertexList[4] = JVertex(JVector3(1.0f, 1.0f, 1.0f), JVector3(0.0f, 0.0f, 1.0f), JVector4(0.0f, 0.0f, 0.0f, 1.0f), JVector2(0.0f, 0.0f));
-	m_VertexList[5] = JVertex(JVector3(-1.0f, 1.0f, 1.0f), JVector3(0.0f, 0.0f, 1.0f), JVector4(0.0f, 1.0f, 0.0f, 1.0f), JVector2(1.0f, 0.0f));
-	m_VertexList[6] = JVertex(JVector3(-1.0f, -1.0f, 1.0f), JVector3(0.0f, 0.0f, 1.0f), JVector4(0.0f, 1.0f, 0.0f, 1.0f), JVector2(1.0f, 1.0f));
-	m_VertexList[7] = JVertex(JVector3(1.0f, -1.0f, 1.0f), JVector3(0.0f, 0.0f, 1.0f), JVector4(0.0f, 1.0f, 0.0f, 1.0f), JVector2(0.0f, 1.0f));
+	m_VertexList[4] = JVertex(T::TVector3(1.0f, 1.0f, 1.0f), T::TVector3(0.0f, 0.0f, 1.0f), T::TVector4(0.0f, 0.0f, 0.0f, 1.0f), T::TVector2(0.0f, 0.0f));
+	m_VertexList[5] = JVertex(T::TVector3(-1.0f, 1.0f, 1.0f), T::TVector3(0.0f, 0.0f, 1.0f), T::TVector4(0.0f, 1.0f, 0.0f, 1.0f), T::TVector2(1.0f, 0.0f));
+	m_VertexList[6] = JVertex(T::TVector3(-1.0f, -1.0f, 1.0f), T::TVector3(0.0f, 0.0f, 1.0f), T::TVector4(0.0f, 1.0f, 0.0f, 1.0f), T::TVector2(1.0f, 1.0f));
+	m_VertexList[7] = JVertex(T::TVector3(1.0f, -1.0f, 1.0f), T::TVector3(0.0f, 0.0f, 1.0f), T::TVector4(0.0f, 1.0f, 0.0f, 1.0f), T::TVector2(0.0f, 1.0f));
 
 	// ¿À¸¥ÂÊ
-	m_VertexList[8] = JVertex(JVector3(1.0f, 1.0f, -1.0f), JVector3(1.0f, 0.0f, 0.0f), JVector4(0.0f, 0.0f, 1.0f, 1.0f), JVector2(0.0f, 0.0f));
-	m_VertexList[9] = JVertex(JVector3(1.0f, 1.0f, 1.0f), JVector3(1.0f, 0.0f, 0.0f), JVector4(0.0f, 0.0f, 1.0f, 1.0f), JVector2(1.0f, 0.0f));
-	m_VertexList[10] = JVertex(JVector3(1.0f, -1.0f, 1.0f), JVector3(1.0f, 0.0f, 0.0f), JVector4(0.0f, 0.0f, 1.0f, 1.0f), JVector2(1.0f, 1.0f));
-	m_VertexList[11] = JVertex(JVector3(1.0f, -1.0f, -1.0f), JVector3(1.0f, 0.0f, 0.0f), JVector4(0.0f, 0.0f, 1.0f, 1.0f), JVector2(0.0f, 1.0f));
+	m_VertexList[8] = JVertex(T::TVector3(1.0f, 1.0f, -1.0f), T::TVector3(1.0f, 0.0f, 0.0f), T::TVector4(0.0f, 0.0f, 1.0f, 1.0f), T::TVector2(0.0f, 0.0f));
+	m_VertexList[9] = JVertex(T::TVector3(1.0f, 1.0f, 1.0f), T::TVector3(1.0f, 0.0f, 0.0f), T::TVector4(0.0f, 0.0f, 1.0f, 1.0f), T::TVector2(1.0f, 0.0f));
+	m_VertexList[10] = JVertex(T::TVector3(1.0f, -1.0f, 1.0f), T::TVector3(1.0f, 0.0f, 0.0f), T::TVector4(0.0f, 0.0f, 1.0f, 1.0f), T::TVector2(1.0f, 1.0f));
+	m_VertexList[11] = JVertex(T::TVector3(1.0f, -1.0f, -1.0f), T::TVector3(1.0f, 0.0f, 0.0f), T::TVector4(0.0f, 0.0f, 1.0f, 1.0f), T::TVector2(0.0f, 1.0f));
 
 	// ¿ÞÂÊ
-	m_VertexList[12] = JVertex(JVector3(-1.0f, 1.0f, 1.0f), JVector3(-1.0f, 0.0f, 0.0f), JVector4(1.0f, 1.0f, 0.0f, 1.0f), JVector2(0.0f, 0.0f));
-	m_VertexList[13] = JVertex(JVector3(-1.0f, 1.0f, -1.0f), JVector3(-1.0f, 0.0f, 0.0f), JVector4(1.0f, 1.0f, 0.0f, 1.0f), JVector2(1.0f, 0.0f));
-	m_VertexList[14] = JVertex(JVector3(-1.0f, -1.0f, -1.0f), JVector3(-1.0f, 0.0f, 0.0f), JVector4(1.0f, 1.0f, 0.0f, 1.0f), JVector2(1.0f, 1.0f));
-	m_VertexList[15] = JVertex(JVector3(-1.0f, -1.0f, 1.0f), JVector3(-1.0f, 0.0f, 0.0f), JVector4(1.0f, 1.0f, 0.0f, 1.0f), JVector2(0.0f, 1.0f));
+	m_VertexList[12] = JVertex(T::TVector3(-1.0f, 1.0f, 1.0f), T::TVector3(-1.0f, 0.0f, 0.0f), T::TVector4(1.0f, 1.0f, 0.0f, 1.0f), T::TVector2(0.0f, 0.0f));
+	m_VertexList[13] = JVertex(T::TVector3(-1.0f, 1.0f, -1.0f), T::TVector3(-1.0f, 0.0f, 0.0f), T::TVector4(1.0f, 1.0f, 0.0f, 1.0f), T::TVector2(1.0f, 0.0f));
+	m_VertexList[14] = JVertex(T::TVector3(-1.0f, -1.0f, -1.0f), T::TVector3(-1.0f, 0.0f, 0.0f), T::TVector4(1.0f, 1.0f, 0.0f, 1.0f), T::TVector2(1.0f, 1.0f));
+	m_VertexList[15] = JVertex(T::TVector3(-1.0f, -1.0f, 1.0f), T::TVector3(-1.0f, 0.0f, 0.0f), T::TVector4(1.0f, 1.0f, 0.0f, 1.0f), T::TVector2(0.0f, 1.0f));
 
 	// À­¸é
-	m_VertexList[16] = JVertex(JVector3(-1.0f, 1.0f, 1.0f), JVector3(0.0f, 1.0f, 0.0f), JVector4(1.0f, 0.5f, 1.0f, 1.0f), JVector2(0.0f, 0.0f));
-	m_VertexList[17] = JVertex(JVector3(1.0f, 1.0f, 1.0f), JVector3(0.0f, 1.0f, 0.0f), JVector4(1.0f, 0.5f, 1.0f, 1.0f), JVector2(1.0f, 0.0f));
-	m_VertexList[18] = JVertex(JVector3(1.0f, 1.0f, -1.0f), JVector3(0.0f, 1.0f, 0.0f), JVector4(1.0f, 0.5f, 1.0f, 1.0f), JVector2(1.0f, 1.0f));
-	m_VertexList[19] = JVertex(JVector3(-1.0f, 1.0f, -1.0f), JVector3(0.0f, 1.0f, 0.0f), JVector4(1.0f, 0.5f, 1.0f, 1.0f), JVector2(0.0f, 1.0f));
+	m_VertexList[16] = JVertex(T::TVector3(-1.0f, 1.0f, 1.0f), T::TVector3(0.0f, 1.0f, 0.0f), T::TVector4(1.0f, 0.5f, 1.0f, 1.0f), T::TVector2(0.0f, 0.0f));
+	m_VertexList[17] = JVertex(T::TVector3(1.0f, 1.0f, 1.0f), T::TVector3(0.0f, 1.0f, 0.0f), T::TVector4(1.0f, 0.5f, 1.0f, 1.0f), T::TVector2(1.0f, 0.0f));
+	m_VertexList[18] = JVertex(T::TVector3(1.0f, 1.0f, -1.0f), T::TVector3(0.0f, 1.0f, 0.0f), T::TVector4(1.0f, 0.5f, 1.0f, 1.0f), T::TVector2(1.0f, 1.0f));
+	m_VertexList[19] = JVertex(T::TVector3(-1.0f, 1.0f, -1.0f), T::TVector3(0.0f, 1.0f, 0.0f), T::TVector4(1.0f, 0.5f, 1.0f, 1.0f), T::TVector2(0.0f, 1.0f));
 
 	// ¾Æ·§¸é
-	m_VertexList[20] = JVertex(JVector3(-1.0f, -1.0f, -1.0f), JVector3(0.0f, -1.0f, 0.0f), JVector4(0.0f, 1.0f, 1.0f, 1.0f), JVector2(0.0f, 0.0f));
-	m_VertexList[21] = JVertex(JVector3(1.0f, -1.0f, -1.0f), JVector3(0.0f, -1.0f, 0.0f), JVector4(0.0f, 1.0f, 1.0f, 1.0f), JVector2(1.0f, 0.0f));
-	m_VertexList[22] = JVertex(JVector3(1.0f, -1.0f, 1.0f), JVector3(0.0f, -1.0f, 0.0f), JVector4(0.0f, 1.0f, 1.0f, 1.0f), JVector2(1.0f, 1.0f));
-	m_VertexList[23] = JVertex(JVector3(-1.0f, -1.0f, 1.0f), JVector3(0.0f, -1.0f, 0.0f), JVector4(0.0f, 1.0f, 1.0f, 1.0f), JVector2(0.0f, 1.0f));
+	m_VertexList[20] = JVertex(T::TVector3(-1.0f, -1.0f, -1.0f), T::TVector3(0.0f, -1.0f, 0.0f), T::TVector4(0.0f, 1.0f, 1.0f, 1.0f), T::TVector2(0.0f, 0.0f));
+	m_VertexList[21] = JVertex(T::TVector3(1.0f, -1.0f, -1.0f), T::TVector3(0.0f, -1.0f, 0.0f), T::TVector4(0.0f, 1.0f, 1.0f, 1.0f), T::TVector2(1.0f, 0.0f));
+	m_VertexList[22] = JVertex(T::TVector3(1.0f, -1.0f, 1.0f), T::TVector3(0.0f, -1.0f, 0.0f), T::TVector4(0.0f, 1.0f, 1.0f, 1.0f), T::TVector2(1.0f, 1.0f));
+	m_VertexList[23] = JVertex(T::TVector3(-1.0f, -1.0f, 1.0f), T::TVector3(0.0f, -1.0f, 0.0f), T::TVector4(0.0f, 1.0f, 1.0f, 1.0f), T::TVector2(0.0f, 1.0f));
 	return true;
 }
 bool		JSkyObj::SetIndexData()

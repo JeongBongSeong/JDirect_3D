@@ -7,6 +7,14 @@ DWORD	JInput::GetKey(DWORD dwKey)
 	return m_dwKeyState[dwKey];
 }
 
+T::TVector2 JInput::GetDelta()
+{
+	T::TVector2 ret;
+	m_fRadianY += (JInput::Get().m_ptDeltaMouse.x / (float)g_rtClient.right) * JBASIS_PI;
+	m_fRadianX += (JInput::Get().m_ptDeltaMouse.y / (float)g_rtClient.bottom) * JBASIS_PI;
+	return TVector2(m_fRadianX, m_fRadianY);
+}
+
 bool	JInput::Init()
 {
 	ZeroMemory(&m_dwKeyState, sizeof(DWORD) * 256);
@@ -77,6 +85,11 @@ bool	JInput::Frame()
 		m_ptDeltaMouse.x = ptOffset.x - m_ptMouse.x;
 		m_ptDeltaMouse.y = ptOffset.y - m_ptMouse.y;
 	}
+	else
+	{
+		m_ptDeltaMouse.x = 0.0f;
+		m_ptDeltaMouse.y = 0.0f;
+	}
 	return true;
 }
 
@@ -93,7 +106,7 @@ bool	JInput::Release()
 JInput::JInput()
 {
 	m_ptDeltaMouse.x = 0.0f;
-	m_ptDeltaMouse.y = 0.0f;
+	m_ptDeltaMouse.y = 1.0f;
 }
 
 JInput::~JInput()

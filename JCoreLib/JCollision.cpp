@@ -1,4 +1,22 @@
 #include "JCollision.h"
+bool JCollision::SphereToPoint(JSphere sp, float x, float y, float z)
+{
+	float fDistance = (sp.vMiddle - T::TVector3(x, y, z)).Length();
+	if (fDistance <= sp.fRadius)
+	{
+		return true;
+	}
+	return false;
+}
+bool JCollision::SphereToPoint(JSphere sp, T::TVector3 v)
+{
+	float fDistance = (sp.vMiddle - v).Length();
+	if (fDistance <= sp.fRadius)
+	{
+		return true;
+	}
+	return false;
+}
 bool   JCollision::RectToPoint(JRect rt, int x, int y)
 {
 	if (rt.vMin.x <= x && rt.vMax.x >= x &&
@@ -8,7 +26,7 @@ bool   JCollision::RectToPoint(JRect rt, int x, int y)
 	}
 	return false;
 }
-bool   JCollision::RectToPoint(JRect rt, JVector2 v)
+bool   JCollision::RectToPoint(JRect rt, T::TVector2 v)
 {
 	if (rt.vMin.x <= v.x && rt.vMax.x >= v.x &&
 		rt.vMin.y <= v.y && rt.vMax.y >= v.y)
@@ -26,7 +44,8 @@ JRect   JCollision::UnionRect(JRect rt1, JRect rt2)
 	rt.vMax.y = rt1.vMax.y < rt2.vMax.y ? rt2.vMax.y : rt1.vMax.y;
 	rt.size.x = rt.vMax.x - rt.vMin.x;
 	rt.size.y = rt.vMax.y - rt.vMin.y;
-	rt.vMiddle = (rt.vMin + rt.vMax) / 2.0f;
+	rt.vMiddle = (rt.vMin + rt.vMax);
+	rt.vMiddle /= 2.0f;
 	return rt;
 }
 bool   JCollision::IntersecJRect(
@@ -51,12 +70,14 @@ bool   JCollision::IntersecJRect(
 
 			pRect->size.x = pRect->vMax.x - pRect->vMin.x;
 			pRect->size.y = pRect->vMax.y - pRect->vMin.y;
-			pRect->vMiddle = (pRect->vMax + pRect->vMin) / 2.0f;
+			pRect->vMiddle = (pRect->vMax + pRect->vMin);
+			pRect->vMiddle /= 2.0f;
 		}
 		return true;
 	}
 	return false;
 }
+
 // 0 :  떨어져 있다.
 // 1 :  안에 있다.
 // 2 :  걸쳐 있다.
@@ -87,8 +108,6 @@ JCollisionResult JCollision::ToRect(JRect rt1, JRect rt2)
 	}
 	return RECT_OUT;
 }
-
-
 bool   JCollision::BoxToPoint(JBox rt, int x, int y, int z)
 {
 	if (rt.vMin.x <= x && rt.vMax.x >= x &&
@@ -99,7 +118,7 @@ bool   JCollision::BoxToPoint(JBox rt, int x, int y, int z)
 	}
 	return false;
 }
-bool   JCollision::BoxToPoint(JBox rt, JVector3 v)
+bool   JCollision::BoxToPoint(JBox rt, T::TVector3 v)
 {
 	if (rt.vMin.x <= v.x && rt.vMax.x >= v.x &&
 		rt.vMin.y <= v.y && rt.vMax.y >= v.y &&
@@ -121,7 +140,8 @@ JBox   JCollision::UnionBox(JBox rt1, JBox rt2)
 	rt.vMax.z = rt1.vMax.z < rt2.vMax.z ? rt2.vMax.z : rt1.vMax.z;
 
 	rt.size = rt.vMax - rt.vMin;
-	rt.vMiddle = (rt.vMin + rt.vMax) / 2.0f;
+	rt.vMiddle = (rt.vMin + rt.vMax);
+	rt.vMiddle /= 2.0f;
 	return rt;
 }
 bool   JCollision::IntersectBox(
@@ -150,7 +170,8 @@ bool   JCollision::IntersectBox(
 				rt1.vMax.z : rt2.vMax.z;
 
 			pRect->size = pRect->vMax - pRect->vMin;
-			pRect->vMiddle = (pRect->vMax + pRect->vMin) / 2.0f;
+			pRect->vMiddle = (pRect->vMax + pRect->vMin);
+			pRect->vMiddle /= 2.0f;
 		}
 		return true;
 	}

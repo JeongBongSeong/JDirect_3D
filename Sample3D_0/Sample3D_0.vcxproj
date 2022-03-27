@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="JBoxObj.h" />
     <ClInclude Include="JCamera.h" />
+    <ClInclude Include="JFrustum.h" />
     <ClInclude Include="JMap.h" />
     <ClInclude Include="JPlaneObj.h" />
     <ClInclude Include="JSkyObj.h" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="JBoxObj.cpp" />
     <ClCompile Include="JCamera.cpp" />
+    <ClCompile Include="JFrustum.cpp" />
     <ClCompile Include="JMap.cpp" />
     <ClCompile Include="JPlaneObj.cpp" />
     <ClCompile Include="JSkyObj.cpp" />
@@ -167,6 +169,11 @@
   <ItemGroup>
     <FxCompile Include="Box.hlsl">
       <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Map.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

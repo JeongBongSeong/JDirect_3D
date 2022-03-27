@@ -183,6 +183,7 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClCompile Include="JWindow.cpp" />
     <ClCompile Include="JWorld.cpp" />
     <ClCompile Include="JWriteFont.cpp" />
+    <ClCompile Include="TMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JBaseMgr.h" />
@@ -206,6 +207,7 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClInclude Include="JWindow.h" />
     <ClInclude Include="JWorld.h" />
     <ClInclude Include="JWriteFont.h" />
+    <ClInclude Include="TMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-#include "Sample.h"
+Ôªø#include "Sample.h"
 void	Sample::CreateResizeDevice(UINT iWidth, UINT iHeight)
 {
 	int k = 0;
@@ -9,27 +9,53 @@ void	Sample::DeleteResizeDevice(UINT iWidth, UINT iHeight)
 }
 bool	Sample::Init()
 {
-	m_Camera.Init();
-
 	JTexture* pTex = I_Texture.Load(L"../../data/ui/main_start_nor.png");
 	JShader* pVShader = I_Shader.CreateVertexShader(
 		m_pd3dDevice.Get(), L"Box.hlsl", "VS");
 	JShader* pPShader = I_Shader.CreatePixelShader(
 		m_pd3dDevice.Get(), L"Box.hlsl", "PS");
 
+	m_CameraTopView.CreateViewMatrix(T::TVector3(0, 3000.0f, -1),
+		T::TVector3(0, 0.0f, 0));
+	m_CameraTopView.CreateProjMatrix(XM_PI * 0.25f,
+		(float)g_rtClient.right / (float)g_rtClient.bottom, 1.0f, 30000.0f);
+	
+	m_Camera.Init();
+
+	m_Camera.CreateViewMatrix(T::TVector3(0, 300.0f, -100.0f),
+		T::TVector3(0, 0.0f, 0));
+	m_Camera.CreateProjMatrix(XM_PI * 0.25f,
+		(float)g_rtClient.right / (float)g_rtClient.bottom, 0.1f, 1000.0f);
+	m_Camera.m_pColorTex = I_Texture.Load(L"../../data/charport.bmp");
+	m_Camera.m_pVShader = I_Shader.CreateVertexShader(
+		m_pd3dDevice.Get(), L"Box.hlsl", "VSColor");;
+	m_Camera.m_pPShader = I_Shader.CreatePixelShader(
+		m_pd3dDevice.Get(), L"Box.hlsl", "PSColor");;
+	m_Camera.SetPosition(T::TVector3(0.0f, 1.0f, 0.0f));
+	if (!m_Camera.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get()))
+	{
+		return false;
+	}
+
+
+
+
+
 	m_MapObj.Init();
 	m_MapObj.SetDevice(m_pd3dDevice.Get(), m_pImmediateContext.Get());
-	m_MapObj.CreateHeightMap(L"../../data/map/129.jpg");
-	m_MapObj.m_pColorTex = I_Texture.Load(L"../../data/map/023.jpg");
-	m_MapObj.m_pVShader = pVShader;
-	m_MapObj.m_pPShader = pPShader;
-	//JMatrix matRotate, matScale;
-	//matRotate.XRotate(DegreeToRadian(180));
-	//matScale.Scale(10, 10.0f, 10.0f);
-	//m_MapObj.m_matWorld = matScale * matRotate;
+	m_MapObj.CreateHeightMap(L"../../data/map/HEIGHT_MOUNTAIN.bmp");
+	m_MapObj.m_pColorTex = I_Texture.Load(L"../../data/map/020.bmp");
+	m_MapObj.m_pVShader = I_Shader.CreateVertexShader(
+		m_pd3dDevice.Get(), L"map.hlsl", "VS");
+	m_MapObj.m_pPShader = I_Shader.CreatePixelShader(
+		m_pd3dDevice.Get(), L"map.hlsl", "PS");
+	/*T::TMatrix matRotate, matScale;
+	T::D3DXMatrixRotationX(&matRotate,DegreeToRadian(180));
+	T::D3DXMatrixScaling(&matScale,10, 10.0f, 10.0f);
+	m_MapObj.m_matWorld = matScale * matRotate;*/
 
-	// ¡§¡°∞≥ºˆ (2^n + 1)	øπ) 16+1 = 17
-	m_MapObj.CreateMap(128 + 1, 128 + 1,1);
+	// Ï†ïÏ†êÍ∞úÏàò (2^n + 1)	Ïòà) 16+1 = 17
+	m_MapObj.CreateMap(m_MapObj.m_iNumCols, m_MapObj.m_iNumRows, 20.0f);
 	if (!m_MapObj.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get()))
 	{
 		return false;
@@ -39,7 +65,7 @@ bool	Sample::Init()
 	m_PlayerObj.m_pColorTex = I_Texture.Load(L"../../data/charport.bmp");
 	m_PlayerObj.m_pVShader = pVShader;
 	m_PlayerObj.m_pPShader = pPShader;
-	m_PlayerObj.SetPosition(JVector3(0.0f, 1.0f, 0.0f));
+	m_PlayerObj.SetPosition(T::TVector3(0.0f, 1.0f, 0.0f));
 	if (!m_PlayerObj.Create(m_pd3dDevice.Get(), m_pImmediateContext.Get()))
 	{
 		return false;
@@ -47,77 +73,126 @@ bool	Sample::Init()
 
 
 	m_SkyObj.Init();
-	m_SkyObj.SetPosition(JVector3(0.0f, 0.0f, 0.0f));
+	m_SkyObj.SetPosition(T::TVector3(0.0f, 0.0f, 0.0f));
 	if (!m_SkyObj.Create(m_pd3dDevice.Get(),
 		m_pImmediateContext.Get(),
 		L"sky.hlsl",
-		L"../../data/sky/xxx.bmp"))
+		L"../../data/sky/LobbyCube.dds"))
 	{
 		return false;
 	}
 
-	// world
-	//TMatrix matRotate, matScale, matTrans;
-	//matRotate.ZRotate(g_fGameTimer);
-	//matScale.Scale(cos(g_fGameTimer) * 0.5f + 0.5f, 1.0f, 1.0f);
-	//matTrans.Translation(0,	cos(g_fGameTimer) * 0.5f + 0.5f, 0);
+	m_ObjList.resize(100);
+	for (int iObj = 0; iObj < m_ObjList.size(); iObj++)
+	{
+		m_ObjList[iObj].Init();
+		m_ObjList[iObj].m_pColorTex = I_Texture.Load(L"../../data/KGCABK.bmp");
+		m_ObjList[iObj].m_pVShader = pVShader;
+		m_ObjList[iObj].m_pPShader = pPShader;
+		m_ObjList[iObj].SetPosition(
+			T::TVector3(-300.0f + rand() % 600,
+				100.0f,
+				-300.0f + rand() % 600));
+		if (!m_ObjList[iObj].Create(m_pd3dDevice.Get(),
+			m_pImmediateContext.Get()))
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
 bool	Sample::Frame()
 {
-	if (JInput::Get().GetKey('A') || JInput::Get().GetKey(VK_LEFT))
-	{
-		//m_PlayerObj.m_vPos.x -= g_fSecPerFrame * 10.0f;
-		m_PlayerObj.m_vPos -= m_PlayerObj.m_vRight * g_fSecPerFrame * 10.0f;
-	}
-	if (JInput::Get().GetKey('D') || JInput::Get().GetKey(VK_RIGHT))
-	{
-		//m_PlayerObj.m_vPos.x += g_fSecPerFrame * 10.0f;
-		m_PlayerObj.m_vPos += m_PlayerObj.m_vRight * g_fSecPerFrame * 10.0f;
-	}
-	if (JInput::Get().GetKey('W') || JInput::Get().GetKey(VK_UP))
-	{
-		//m_PlayerObj.m_vPos.z += g_fSecPerFrame * 10.0f;
-		m_PlayerObj.m_vPos += m_PlayerObj.m_vLook * g_fSecPerFrame * 10.0f;
-	}
-	if (JInput::Get().GetKey('S') || JInput::Get().GetKey(VK_DOWN))
-	{
-		//m_PlayerObj.m_vPos.z -= g_fSecPerFrame * 10.0f;
-		m_PlayerObj.m_vPos -= m_PlayerObj.m_vLook * g_fSecPerFrame * 10.0f;
+	//if (JInput::Get().GetKey('A') || JInput::Get().GetKey(VK_LEFT))
+	//{
+	//	//m_PlayerObj.m_vPos.x -= g_fSecPerFrame * 10.0f;
+	//	m_Camera.m_vCamera -= m_Camera.m_vRight * g_fSecPerFrame * 10.0f;
+	//}
+	//if (JInput::Get().GetKey('D') || JInput::Get().GetKey(VK_RIGHT))
+	//{
+	//	//m_PlayerObj.m_vPos.x += g_fSecPerFrame * 10.0f;
+	//	m_Camera.m_vCamera += m_Camera.m_vRight * g_fSecPerFrame * 10.0f;
+	//}
+	//if (JInput::Get().GetKey('W') || JInput::Get().GetKey(VK_UP))
+	//{
+	//	//m_PlayerObj.m_vPos.z += g_fSecPerFrame * 10.0f;
+	//	m_Camera.m_vCamera += m_Camera.m_vLook * g_fSecPerFrame * 10.0f;
+	//}
+	//if (JInput::Get().GetKey('S') || JInput::Get().GetKey(VK_DOWN))
+	//{
+	//	//m_PlayerObj.m_vPos.z -= g_fSecPerFrame * 10.0f;
+	//	m_Camera.m_vCamera -= m_Camera.m_vLook * g_fSecPerFrame * 10.0f;
 
-	}
-	if (JInput::Get().GetKey('R') || JInput::Get().GetKey(VK_UP))
+	//}
+	/*if (JInput::Get().GetKey('R') || JInput::Get().GetKey(VK_UP))
 	{
 		m_PlayerObj.m_vPos.y += g_fSecPerFrame * 10.0f;
 	}
 	if (JInput::Get().GetKey('F') || JInput::Get().GetKey(VK_DOWN))
 	{
 		m_PlayerObj.m_vPos.y -= g_fSecPerFrame * 10.0f;
-	}
-	JMatrix matRotate;
-	JMatrix matScale;
-	static float fRadian = 0.0f;
-	fRadian += (JInput::Get().m_ptDeltaMouse.x / (float)g_rtClient.right) * JBASIS_PI;
-	matRotate.YRotate(fRadian);
+	}*/
+	T::TVector2 dir = JInput::Get().GetDelta();
+	T::TMatrix matRotate;
+	T::TMatrix matScale;
 
-	matScale.Scale(50, 50, 50);
+	
+	
+	T::D3DXMatrixRotationY(&matRotate,-dir.y);
+	T::D3DXMatrixScaling(&matScale, 50, 50, 50);
 	m_PlayerObj.m_matWorld = matScale * matRotate;
 
 	m_PlayerObj.m_vPos.y = m_MapObj.GetHeight(m_PlayerObj.m_vPos.x, m_PlayerObj.m_vPos.z) + 50;
 	m_PlayerObj.SetPosition(m_PlayerObj.m_vPos);
 
 	m_Camera.m_vTarget = m_PlayerObj.m_vPos;
-	//m_Camera.m_vCamera = m_PlayerObj.m_vPos + JVector3(0, 10.0f, -25.0f);
-
 	float y = m_MapObj.GetHeight(m_Camera.m_vCamera.x, m_Camera.m_vCamera.z);
+	//m_Camera.m_vCamera = m_Camera.m_vCamera+T::TVector3(0, 10.0f, -25.0f);
+	/*
 	m_Camera.m_vCamera = m_PlayerObj.m_vPos +
 		m_PlayerObj.m_vLook * -1.0f * 10.0f +
-		m_PlayerObj.m_vUp * 10.0f;
+		m_PlayerObj.m_vUp * 10.0f;*/
 
+	if (JInput::Get().GetKey('A') || JInput::Get().GetKey(VK_LEFT))
+	{
+		m_Camera.MoveSide(-g_fSecPerFrame * 1000.0f);
+	}
+	if (JInput::Get().GetKey('D') || JInput::Get().GetKey(VK_RIGHT))
+	{
+		m_Camera.MoveSide(g_fSecPerFrame * 1000.0f);
+	}
+	//m_Camera.MoveLook(10.0f);
+	if (JInput::Get().GetKey('W') || JInput::Get().GetKey(VK_UP))
+	{
+		m_Camera.MoveLook(g_fSecPerFrame * 1000.0f);
+	}
+	if (JInput::Get().GetKey('S') || JInput::Get().GetKey(VK_DOWN))
+	{
+		m_Camera.MoveLook(-g_fSecPerFrame * 1000.0f);
+	}
 
-	m_Camera.Frame();
+	m_Camera.Update(T::TVector4(-dir.x, -dir.y, 0, 0));
 	m_MapObj.Frame();
 	m_PlayerObj.Frame();
+	T::TMatrix matRotateObj;
+
+	for (auto& obj : m_ObjList)
+	{
+		T::D3DXMatrixScaling(&matScale,
+			10 * cosf(g_fGameTimer),
+			10 * cosf(g_fGameTimer),
+			10 * cosf(g_fGameTimer));
+		T::D3DXMatrixRotationYawPitchRoll(&matRotateObj,
+			cosf(g_fGameTimer * obj.m_vPos.x * 0.001f) * XM_PI,
+			sinf(g_fGameTimer * obj.m_vPos.y * 0.001f) * XM_PI,
+			1.0f);
+		obj.m_matWorld = matScale * matRotateObj;
+		obj.m_vPos.y = m_MapObj.GetHeight(obj.m_vPos.x, obj.m_vPos.z) + 50;
+		obj.SetPosition(obj.m_vPos);
+		obj.Frame();
+	}
+
 	return true;
 }
 bool	Sample::Render()
@@ -127,25 +202,45 @@ bool	Sample::Render()
 	m_SkyObj.m_matViewSky._41 = 0;
 	m_SkyObj.m_matViewSky._42 = 0;
 	m_SkyObj.m_matViewSky._43 = 0;
-	JMatrix matRotation, matScale;
-	matScale.Scale(3000.0f, 3000.0f, 3000.0f);
-	matRotation.YRotate(g_fGameTimer * 0.00f);
+	T::TMatrix matRotation, matScale;
+	T::D3DXMatrixScaling(&matScale, 10.0f, 10.0f, 10.0f);
+	T::D3DXMatrixRotationY(&matRotation,g_fGameTimer * 0.00f);
 	m_SkyObj.m_matWorld = matScale * matRotation;
 	m_SkyObj.SetMatrix(NULL, &m_SkyObj.m_matViewSky, &m_Camera.m_matProj);
 	m_pImmediateContext->RSSetState(JDxState::g_pRSNoneCullSolid);
-	m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSPoint);
+	m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSLinear);
+	m_pImmediateContext->PSSetSamplers(1, 1, &JDxState::m_pSSPoint);
 	m_SkyObj.Render();
 
-
-	m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSLinear);
+	//m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSLinear);
+	//m_pImmediateContext->RSSetState(JDxState::g_pRSBackCullSolid);
 	m_MapObj.SetMatrix(nullptr, &m_Camera.m_matView, &m_Camera.m_matProj);
 	m_MapObj.Render();
 
 	m_PlayerObj.SetMatrix(nullptr, &m_Camera.m_matView, &m_Camera.m_matProj);
-	
 	m_PlayerObj.Render();
-	/*m_ObjB.SetMatrix(nullptr, &m_Camera.m_matView, &m_Camera.m_matProj);
-	m_ObjB.Render();*/
+	
+	for (auto& obj : m_ObjList)
+	{
+		obj.SetMatrix(nullptr, &m_Camera.m_matView,
+			&m_Camera.m_matProj);
+		if (m_Camera.ClassifyOBB(&obj.m_BoxCollision) == TRUE)
+		{
+			obj.Render();
+		}
+		else
+		{
+			obj.SetMatrix(nullptr, &m_CameraTopView.m_matView,
+				&m_CameraTopView.m_matProj);
+			obj.m_ConstantList.Color = T::TVector4(0, 0, 0, 1);
+			obj.Render();
+		}
+	}
+
+	//m_Camera.SetMatrix(nullptr, &m_CameraTopView.m_matView,
+	//	&m_CameraTopView.m_matProj);
+	m_Camera.Render();
+
 
 	std::wstring msg = L"FPS:";
 	msg += std::to_wstring(m_GameTimer.m_iFPS);
@@ -159,7 +254,11 @@ bool	Sample::Release()
 	m_SkyObj.Release();
 	m_MapObj.Release();
 	m_PlayerObj.Release();
-	m_ObjB.Release();
+	m_Camera.Release();
+	for (auto& obj : m_ObjList)
+	{
+		obj.Release();
+	}
 	return true;
 }
 Sample::Sample()

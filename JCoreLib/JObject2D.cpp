@@ -18,7 +18,7 @@ void JObject2D::UpdateRectDraw(RECT rt)
 	m_fWidth = rt.right;
 	m_fHeight = rt.bottom;
 }
-void JObject2D::AddPosition(JVector2 vPos)
+void JObject2D::AddPosition(T::TVector2 vPos)
 {
 	m_vPos = m_vPos + vPos;
 	// 오브젝트의 위치값설정 
@@ -36,7 +36,7 @@ void JObject2D::UpdateRectSource(RECT rt)
 {
 	m_rtSource = rt;
 }
-void JObject2D::SetPosition(JVector2 vPos)
+void JObject2D::SetPosition(T::TVector2 vPos)
 {
 	m_vPos = vPos;
 	SetRectDraw({
@@ -52,7 +52,7 @@ void JObject2D::SetPosition(JVector2 vPos)
 		m_pContext->UpdateSubresource(m_pVertexBuffer, 0, NULL, &m_VertexList2D.at(0), 0, 0);
 	}
 }
-void JObject2D::Convert(JVector2 center, float fWidth, float fHeight, vector<SimpleVertex>& retList)
+void JObject2D::Convert(T::TVector2 center, float fWidth, float fHeight, vector<SimpleVertex>& retList)
 {
 	// --      +-
 	// -+      ++
@@ -108,7 +108,7 @@ void JObject2D::Convert(vector<SimpleVertex>& list, vector<SimpleVertex>& retLis
 	}
 }
 void	JObject2D::ConvertIndex(
-	JVector2 center, float fWidth, float fHeight,
+	T::TVector2 center, float fWidth, float fHeight,
 	std::vector<SimpleVertex>& retList)
 {
 	// 0       1
@@ -205,7 +205,7 @@ bool	JObject2D::Frame()
 	if (m_bFadeIn)	FadeIn();
 	if (m_bFadeOut)	FadeOut();
 	m_ConstantList.Color = m_vColor;
-	m_ConstantList.Timer = JVector4(
+	m_ConstantList.Timer = T::TVector4(
 		g_fGameTimer,
 		0,
 		0,
@@ -218,7 +218,7 @@ bool	JObject2D::Frame()
 JObject2D::JObject2D()
 {
 	m_fAlpha = 1.0f;
-	m_vColor = JVector4(1, 1, 1, 1);
+	m_vColor = T::TVector4(1, 1, 1, 1);
 	m_rtSource.left = 0; m_rtSource.right = 0;
 	m_rtSource.top = 0; m_rtSource.bottom = 0;
 	m_rtDraw.left = 0; m_rtDraw.right = g_rtClient.right;

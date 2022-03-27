@@ -12,6 +12,8 @@ enum KeyState
 class JInput : public JSingleton<JInput>
 {
 public:
+	float m_fRadianX = 0.0f;
+	float m_fRadianY = 0.0f;
 	bool m_bDrag = false;
 	DWORD m_dwKeyState[256];
 	POINT m_ptMouse;
@@ -20,6 +22,7 @@ public:
 	POINT m_ptDeltaMouse;
 public:
 	DWORD	GetKey(DWORD dwKey);
+	T::TVector2 GetDelta();
 public:
 	bool	Init();
 	bool	Frame();

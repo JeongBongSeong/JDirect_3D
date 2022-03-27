@@ -33,6 +33,9 @@
     <ClInclude Include="JSkyObj.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="JFrustum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JBoxObj.cpp">
@@ -53,9 +56,13 @@
     <ClCompile Include="JSkyObj.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="JFrustum.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Box.hlsl" />
     <FxCompile Include="Sky.hlsl" />
+    <FxCompile Include="Map.hlsl" />
   </ItemGroup>
 </Project>

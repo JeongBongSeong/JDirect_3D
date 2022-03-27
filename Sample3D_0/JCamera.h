@@ -1,19 +1,31 @@
 #pragma once
 #include "JStd.h"
-class JCamera
+#include "JFrustum.h"
+class JCamera : public JFrustum
 {
 public:
-	JVector3			m_vCamera;
-	JVector3			m_vTarget;
-	JVector3			m_vDefaultUp;
+	float				m_fRadius = 10.0f;
+	T::TQuaternion		m_qRotation;
+	T::TVector3			m_vCamera;
+	T::TVector3			m_vTarget;
+	T::TVector3			m_vDefaultUp;
 
-	JVector3			m_vRight;
-	JVector3			m_vLook;
-	JVector3			m_vUp;
+	T::TVector3			m_vRight;
+	T::TVector3			m_vLook;
+	T::TVector3			m_vUp;
 
-	JMatrix				m_matWorld;
-	JMatrix				m_matView;
-	JMatrix				m_matProj;
+	T::TMatrix				m_matWorld;
+	T::TMatrix				m_matView;
+	T::TMatrix				m_matProj;
+public:
+	void CreateViewMatrix(T::TVector3 p, T::TVector3 t = T::TVector3(0, 0, 0), T::TVector3 u = T::TVector3(0, 1, 0));
+	void CreateProjMatrix(float fovy = XM_PI * 0.25f, float Aspect = 1.44f, float zn = 0.1f, float zf = 5000.0f);
+public:
+	void MoveLook(float fValue);
+	void MoveSide(float fValue);
+	void MoveUp(float fValue);
+	virtual bool UpdateVector();
+	virtual bool Update(T::TVector4 vDirValue);
 public:
 	virtual bool	Init();
 	virtual bool	Frame();

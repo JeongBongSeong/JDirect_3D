@@ -35,9 +35,9 @@ bool    JDxObject::SetIndexData()
 bool    JDxObject::SetConstantData()
 {
 	ZeroMemory(&m_ConstantList, sizeof(JConstantData));
-	m_ConstantList.matWorld = JMatrix();
-	m_ConstantList.matView = JMatrix();
-	m_ConstantList.matProj = JMatrix();
+	m_ConstantList.matWorld = T::TMatrix();
+	m_ConstantList.matView = T::TMatrix();
+	m_ConstantList.matProj = T::TMatrix();
 	m_ConstantList.Color.x = 0.0f;
 	m_ConstantList.Color.y = 1.0f;
 	m_ConstantList.Color.z = 0.0f;
@@ -153,7 +153,7 @@ bool	JDxObject::Create(ID3D11Device* pd3dDevice,
 	const TCHAR* szColorFileName,
 	const TCHAR* szMaskFileName)
 {
-	HRESULT hr;
+	//HRESULT hr;
 	SetDevice(pd3dDevice, pContext);
 	if (szColorFileName != nullptr && !LoadTexture(szColorFileName, szMaskFileName))
 	{
@@ -239,8 +239,8 @@ bool	JDxObject::Render()
 	m_pContext->IASetInputLayout(m_pVertexLayout);
 
 
-	UINT StartSlot;
-	UINT NumBuffers;
+	//UINT StartSlot;
+	//UINT NumBuffers;
 	UINT Strides = sizeof(JVertex);
 	UINT Offsets = 0;
 

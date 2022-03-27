@@ -81,6 +81,9 @@
     <ClCompile Include="JMatrix.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="TMath.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JCore.h">
@@ -144,6 +147,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="JMatrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="TMath.h">
       <Filter>math</Filter>
     </ClInclude>
   </ItemGroup>

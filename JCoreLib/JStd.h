@@ -17,6 +17,7 @@
 #include"JCollision.h"
 #include <wrl.h> 
 #include"JMatrix.h"
+#include"TMath.h"
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 #include <DirectXCollision.h>
@@ -43,7 +44,7 @@ extern HWND g_hWnd;
 
 extern float	g_fSecPerFrame;
 extern float	g_fGameTimer;
-extern JVector4	g_fBackGroundColor;
+extern T::TVector4	g_fBackGroundColor;
 extern POINT	g_ptMouse;
 
 static std::wstring to_mw(const std::string& _src)

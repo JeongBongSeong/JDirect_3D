@@ -42,18 +42,6 @@ VS_OUTPUT VS(VS_INPUT v)
 	pOut.r = normalize(vLocal.xyz);
 	return pOut;
 }
-VS_OUTPUT VSColor(VS_INPUT v)
-{
-	VS_OUTPUT pOut = (VS_OUTPUT)0;
-	float4 vLocal = float4(v.p.xyz, 1.0f);// float4(v.p.x, v.p.y, v.p.z, 1.0f);
-	float4 vWorld = mul(vLocal, g_matWorld);
-	float4 vView = mul(vWorld, g_matView);
-	float4 vProj = mul(vView, g_matProj);
-	pOut.p = vProj;
-	pOut.c = v.c;
-	pOut.r = normalize(vLocal.xyz);
-	return pOut;
-}
 Texture2D		g_txColor : register(t0);
 Texture2D		g_txMask : register(t1);
 TextureCube	    g_txCubeMap : register(t3);
@@ -67,10 +55,8 @@ float4 PS(VS_OUTPUT input) : SV_TARGET
 	float4 final = color;
 	// 소스알파(1) = 마스크이미지의 검정색부분은 불투명된다.
 	// 소스알파(0) = 마스크이미지의 흰색부분은   투명된다.
-	final = final * Color0;
+	final = final * input.c;
 	//final.a = 1.0f;	
-
-	//final = g_txCubeMap.Sample(g_Sample, input.r);
 	return final;
 }
 
@@ -80,11 +66,4 @@ float4 PSAlphaBlend(VS_OUTPUT input) : SV_TARGET
 	float4 final = color * input.c;
 	final.a = color.a;
 	return final;
-}
-
-float4 PSColor(VS_OUTPUT input) : SV_TARGET
-{
-	float4 vColor = input.c;
-	vColor.a = 0.5f;
-	return vColor;
 }

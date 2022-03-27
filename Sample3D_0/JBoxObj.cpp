@@ -5,138 +5,141 @@ bool    JBoxObj::SetVertexData()
 
 	int index = 0;
 	// +Z plane
-	m_VertexList[index].p = JVector3(1.0f, 1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, 1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 0.0f);
-	m_VertexList[++index].p = JVector3(-1.0f, 1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, 1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 0.0f);
-	m_VertexList[++index].p = JVector3(1.0f, -1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, 1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 1.0f);
-	m_VertexList[++index].p = JVector3(-1.0f, -1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, 1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 1.0f);
+	m_VertexList[index].p = T::TVector3(1.0f, 1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, 1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, 1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, 1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, -1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, 1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, -1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, 1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 1.0f);
 	// -Z plane
 
-	m_VertexList[++index].p = JVector3(-1.0f, 1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, 1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 0.0f);
 
-	m_VertexList[++index].p = JVector3(1.0f, 1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 0.0f);
-
-
-	m_VertexList[++index].p = JVector3(-1.0f, -1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, 1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 0.0f);
 
 
-	m_VertexList[++index].p = JVector3(1.0f, -1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 0.0f, -1.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, -1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 1.0f);
+
+
+	m_VertexList[++index].p = T::TVector3(1.0f, -1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 0.0f, -1.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 1.0f);
 
 
 	// +X plane
-	m_VertexList[++index].p = JVector3(1.0f, 1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, 1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 0.0f);
 
-	m_VertexList[++index].p = JVector3(1.0f, 1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 0.0f);
-
-
-	m_VertexList[++index].p = JVector3(1.0f, -1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, 1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 0.0f);
 
 
-	m_VertexList[++index].p = JVector3(1.0f, -1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, -1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 1.0f);
+
+
+	m_VertexList[++index].p = T::TVector3(1.0f, -1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 1.0f);
 
 	// -X plane
-	m_VertexList[++index].p = JVector3(-1.0f, 1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(-1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, 1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(-1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 0.0f);
 
-	m_VertexList[++index].p = JVector3(-1.0f, 1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(-1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 0.0f);
-
-
-	m_VertexList[++index].p = JVector3(-1.0f, -1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(-1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, 1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(-1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 0.0f);
 
 
-	m_VertexList[++index].p = JVector3(-1.0f, -1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(-1.0f, 0.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, -1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(-1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 1.0f);
+
+
+	m_VertexList[++index].p = T::TVector3(-1.0f, -1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(-1.0f, 0.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 1.0f);
 
 	// -y plane
-	m_VertexList[++index].p = JVector3(-1.0f, -1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, -1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, -1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, -1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 0.0f);
 
-	m_VertexList[++index].p = JVector3(1.0f, -1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, -1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 0.0f);
-
-
-	m_VertexList[++index].p = JVector3(-1.0f, -1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, -1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, -1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, -1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 0.0f);
 
 
-	m_VertexList[++index].p = JVector3(1.0f, -1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, -1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, -1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, -1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 1.0f);
+
+
+	m_VertexList[++index].p = T::TVector3(1.0f, -1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, -1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 1.0f);
 
 	// +y plane
-	m_VertexList[++index].p = JVector3(-1.0f, 1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 0.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, 1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 0.0f);
 
-	m_VertexList[++index].p = JVector3(1.0f, 1.0f, 1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 0.0f);
-
-
-	m_VertexList[++index].p = JVector3(-1.0f, 1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(0.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(1.0f, 1.0f, 1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 0.0f);
 
 
-	m_VertexList[++index].p = JVector3(1.0f, 1.0f, -1.0f);
-	m_VertexList[index].n = JVector3(0.0f, 1.0f, 0.0f);
-	m_VertexList[index].c = JVector4(1.0f, 1.0f, 1.0f, 1.0f);
-	m_VertexList[index].t = JVector2(1.0f, 1.0f);
+	m_VertexList[++index].p = T::TVector3(-1.0f, 1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(0.0f, 1.0f);
+
+
+	m_VertexList[++index].p = T::TVector3(1.0f, 1.0f, -1.0f);
+	m_VertexList[index].n = T::TVector3(0.0f, 1.0f, 0.0f);
+	m_VertexList[index].c = T::TVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_VertexList[index].t = T::TVector2(1.0f, 1.0f);
+	
+
+	GenAABB();
 	return true;
 
 }
@@ -155,7 +158,6 @@ bool    JBoxObj::SetIndexData()
 	m_IndexList.push_back(20); m_IndexList.push_back(21); m_IndexList.push_back(22);
 	m_IndexList.push_back(22); m_IndexList.push_back(21); m_IndexList.push_back(23);
 
-	return true;
 	return true;
 }
 

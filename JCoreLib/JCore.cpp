@@ -1,7 +1,7 @@
 #include "JCore.h"
 #include "JObjectMgr.h"
 #include "JSoundMgr.h"
-JVector4   g_fBackGroundColor;
+T::TVector4   g_fBackGroundColor;
 
 bool JCore::CoreInit()
 {

@@ -6,19 +6,19 @@
 
 struct SimpleVertex
 {
-	JVector2 v;
-	JVector2 t;
+	T::TVector2 v;
+	T::TVector2 t;
 };
 struct JVertex
 {
-	JVector3 p;
-	JVector3 n;
-	JVector4 c;
-	JVector2 t;
-	JVertex(JVector3 p1,
-		JVector3 n1,
-		JVector4 c1,
-		JVector2 t1)
+	T::TVector3 p;
+	T::TVector3 n;
+	T::TVector4 c;
+	T::TVector2 t;
+	JVertex(T::TVector3 p1,
+		T::TVector3 n1,
+		T::TVector4 c1,
+		T::TVector2 t1)
 	{
 		p = p1;
 		n = n1;
@@ -75,6 +75,7 @@ public:
 	float m_fWidth;
 	float m_fHeight;
 	JRect m_rtCollision;
+	JBox m_BoxCollision;
 	DWORD m_dwCollisionType;
 	DWORD m_dwSelectType;
 	DWORD m_dwSelectState;
@@ -117,12 +118,12 @@ struct JIndex
 
 struct JConstantData
 {
-	JMatrix matWorld;
-	JMatrix matView;
-	JMatrix matProj;
+	T::TMatrix matWorld;
+	T::TMatrix matView;
+	T::TMatrix matProj;
 
-	JVector4 Color;
-	JVector4 Timer;
+	T::TVector4 Color;
+	T::TVector4 Timer;
 };
 
 class JDxObject : public JBaseObject
