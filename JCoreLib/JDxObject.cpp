@@ -46,6 +46,15 @@ bool    JDxObject::SetConstantData()
 	m_ConstantList.Timer.y = 1.0f;
 	m_ConstantList.Timer.z = 0.0f;
 	m_ConstantList.Timer.w = 0.0f;
+
+	ZeroMemory(&m_ConstantList, sizeof(JLightData));
+
+	m_LightConstantList.vLightDir.x = 0.0f;
+	m_LightConstantList.vLightDir.y = 1.0f;
+	m_LightConstantList.vLightDir.z = 0.0f;
+	m_LightConstantList.vLightPos.x = 1.0f;
+	m_LightConstantList.vLightPos.y = 0.0f;
+	m_LightConstantList.vLightPos.z = 0.0f;
 	return true;
 }
 bool    JDxObject::CreateVertexShader(const TCHAR* szFile)
@@ -120,6 +129,20 @@ bool	JDxObject::CreateConstantBuffer()
 	{
 		return false;
 	}
+
+	ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
+	bd.ByteWidth = sizeof(JLightData);
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+	ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
+	sd.pSysMem = &m_LightConstantList;
+
+	if (FAILED(hr = m_pd3dDevice->CreateBuffer(&bd, &sd, &m_pLightConstantBuffer)))
+	{
+		return false;
+	}
+
 	return true;
 }
 bool	JDxObject::CreateInputLayout()
@@ -280,10 +303,12 @@ bool	JDxObject::PostRender()
 }
 bool	JDxObject::Release()
 {
+	if (m_pLightConstantBuffer) m_pLightConstantBuffer->Release();
 	if (m_pVertexBuffer) m_pVertexBuffer->Release();
 	if (m_pIndexBuffer) m_pIndexBuffer->Release();
 	if (m_pConstantBuffer) m_pConstantBuffer->Release();
 	if (m_pVertexLayout) m_pVertexLayout->Release();
+	m_pLightConstantBuffer = nullptr;
 	m_pVertexBuffer = nullptr;
 	m_pIndexBuffer = nullptr;
 	m_pConstantBuffer = nullptr;

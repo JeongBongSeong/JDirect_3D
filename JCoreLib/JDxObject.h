@@ -125,7 +125,11 @@ struct JConstantData
 	T::TVector4 Color;
 	T::TVector4 Timer;
 };
-
+struct JLightData
+{
+	T::TVector4 vLightDir;
+	T::TVector4 vLightPos;
+};
 class JDxObject : public JBaseObject
 {
 public:
@@ -148,6 +152,9 @@ public:
 
 	JConstantData    m_ConstantList;
 	ID3D11Buffer* m_pConstantBuffer = nullptr;
+
+	JLightData    m_LightConstantList;
+	ID3D11Buffer* m_pLightConstantBuffer = nullptr;
 
 	ID3D11InputLayout* m_pVertexLayout = nullptr;
 	ID3D11Device* m_pd3dDevice;
