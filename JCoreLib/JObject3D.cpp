@@ -64,21 +64,8 @@ void JObject3D::GenAABB()
 		m_BoxCollision.vMin.y,
 		m_BoxCollision.vMax.z);
 }
-void JObject3D::SetMatrix(T::TMatrix* matWorld, T::TMatrix* matView, T::TMatrix* matProj)
+void JObject3D::UpdateData()
 {
-	m_ConstantList.matWorld = m_matWorld.Transpose();
-	if (matWorld != nullptr)
-	{
-		m_ConstantList.matWorld = matWorld->Transpose();
-	}
-	if (matView != nullptr)
-	{
-		m_ConstantList.matView = matView->Transpose();
-	}
-	if (matProj != nullptr)
-	{
-		m_ConstantList.matProj = matProj->Transpose();
-	}
 	m_vRight.x = m_matWorld._11;
 	m_vRight.y = m_matWorld._12;
 	m_vRight.z = m_matWorld._13;
@@ -92,7 +79,9 @@ void JObject3D::SetMatrix(T::TMatrix* matWorld, T::TMatrix* matView, T::TMatrix*
 	T::D3DXVec3Normalize(&m_vRight, &m_vRight);
 	T::D3DXVec3Normalize(&m_vUp, &m_vUp);
 	T::D3DXVec3Normalize(&m_vLook, &m_vLook);
-
+}
+void JObject3D::UpdateCollision()
+{
 	m_BoxCollision.vAxis[0] = m_vRight;
 	m_BoxCollision.vAxis[1] = m_vUp;
 	m_BoxCollision.vAxis[2] = m_vLook;
@@ -137,6 +126,28 @@ void JObject3D::SetMatrix(T::TMatrix* matWorld, T::TMatrix* matView, T::TMatrix*
 	m_BoxCollision.size.z = fabs(T::D3DXVec3Dot(&m_BoxCollision.vAxis[2], &vHalf));
 	m_BoxCollision.vMiddle = (m_BoxCollision.vMin + m_BoxCollision.vMax);
 	m_BoxCollision.vMiddle /= 2.0f;
+
+}
+void JObject3D::SetMatrix(T::TMatrix* matWorld, T::TMatrix* matView, T::TMatrix* matProj)
+{
+	m_ConstantList.matWorld = m_matWorld.Transpose();
+	if (matWorld != nullptr)
+	{
+		m_matWorld = *matWorld;
+		m_ConstantList.matWorld = matWorld->Transpose();
+	}
+	if (matView != nullptr)
+	{
+		m_matView = *matView;
+		m_ConstantList.matView = matView->Transpose();
+	}
+	if (matProj != nullptr)
+	{
+		m_matProj = *matProj;
+		m_ConstantList.matProj = matProj->Transpose();
+	}
+	UpdateData();
+	UpdateCollision();
 }
 
 void JObject3D::AddPosition(T::TVector3 vPos)

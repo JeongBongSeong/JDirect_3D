@@ -5,7 +5,9 @@
 #include "JMap.h"
 #include "JSkyObj.h"
 #include "JBoxObj.h"
+#include "JQuadtree.h" 
 
+#define  MAX_NUM_OBJECTS 100
 class Sample : public JCore
 {
 	JCamera m_Camera;

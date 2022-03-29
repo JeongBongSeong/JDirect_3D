@@ -7,6 +7,8 @@ public:
 	T::TVector3 m_vDirection;
 	T::TVector4 m_vColor;
 	T::TMatrix m_matWorld;
+	T::TMatrix m_matView;
+	T::TMatrix m_matProj;
 	T::TVector3 m_vRight;
 	T::TVector3 m_vLook;
 	T::TVector3 m_vUp;
@@ -32,7 +34,8 @@ public:
 		return true;
 	};
 public:
-	virtual void UpdateData() {};
+	virtual void UpdateData();
+	virtual void UpdateCollision();
 	virtual void SetMatrix(T::TMatrix* matWorld, T::TMatrix* matView, T::TMatrix* matProj);
 public:
 	JObject3D();

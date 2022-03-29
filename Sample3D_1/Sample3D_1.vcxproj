@@ -148,7 +148,9 @@
     <ClInclude Include="JCamera.h" />
     <ClInclude Include="JFrustum.h" />
     <ClInclude Include="JMap.h" />
+    <ClInclude Include="JNode.h" />
     <ClInclude Include="JPlaneObj.h" />
+    <ClInclude Include="JQuadTree.h" />
     <ClInclude Include="JSkyObj.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
@@ -157,7 +159,9 @@
     <ClCompile Include="JCamera.cpp" />
     <ClCompile Include="JFrustum.cpp" />
     <ClCompile Include="JMap.cpp" />
+    <ClCompile Include="JNode.cpp" />
     <ClCompile Include="JPlaneObj.cpp" />
+    <ClCompile Include="JQuadTree.cpp" />
     <ClCompile Include="JSkyObj.cpp" />
     <ClCompile Include="Sample.cpp" />
   </ItemGroup>
