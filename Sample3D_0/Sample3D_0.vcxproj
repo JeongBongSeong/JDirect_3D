@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\\..\\include\\JCore3D\\;..\\..\\include\\dxtk\\;..\\..\\include\\JCoreNetwork\\;..\\..\\include\\fmod\\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\\..\\include\\JCore3D\\;..\\..\\include\\dxtk\\;..\\..\\include\\JCoreNetwork\\;..\\..\\include\\fmod\\;..\\..\\include\\fbx\\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,18 +144,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="JBoxObj.h" />
-    <ClInclude Include="JCamera.h" />
-    <ClInclude Include="JFrustum.h" />
+    <ClInclude Include="JBoxObj.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="JCamera.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="JFrustum.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="JMap.h" />
     <ClInclude Include="JPlaneObj.h" />
     <ClInclude Include="JSkyObj.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JBoxObj.cpp" />
-    <ClCompile Include="JCamera.cpp" />
-    <ClCompile Include="JFrustum.cpp" />
+    <ClCompile Include="JBoxObj.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="JCamera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="JFrustum.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="JMap.cpp" />
     <ClCompile Include="JPlaneObj.cpp" />
     <ClCompile Include="JSkyObj.cpp" />

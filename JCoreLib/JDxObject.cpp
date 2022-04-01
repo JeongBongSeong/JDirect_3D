@@ -237,6 +237,8 @@ bool	JDxObject::Render()
 
 	m_pContext->UpdateSubresource(
 		m_pConstantBuffer, 0, NULL, &m_ConstantList, 0, 0);
+	m_pContext->UpdateSubresource(
+		m_pLightConstantBuffer, 0, NULL, &m_LightConstantList, 0, 0);
 
 	m_pContext->GSSetShader(nullptr, NULL, 0);
 	m_pContext->HSSetShader(nullptr, NULL, 0);

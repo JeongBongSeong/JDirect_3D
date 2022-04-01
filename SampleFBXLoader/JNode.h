@@ -72,7 +72,7 @@ struct JMapObject
 			}
 		}
 
-		T::TVector3 vHalf = box.vMax - box.vMiddle;
+		T:TVector3 vHalf = box.vMax - box.vMiddle;
 		box.size.x = fabs(T::D3DXVec3Dot(&box.vAxis[0], &vHalf));
 		box.size.y = fabs(T::D3DXVec3Dot(&box.vAxis[1], &vHalf));
 		box.size.z = fabs(T::D3DXVec3Dot(&box.vAxis[2], &vHalf));

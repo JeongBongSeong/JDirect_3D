@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7843648a-4ecb-4ff6-b465-18149fc01cc9}</ProjectGuid>
-    <RootNamespace>Sample3D_1</RootNamespace>
+    <ProjectGuid>{7058fe71-60a2-4a0e-b495-bd9c798cb9c8}</ProjectGuid>
+    <RootNamespace>SampleFBXLoader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\\..\\output\\Debug\\</OutDir>
-    <IntDir>..\\..\\output\\Debug\\Sample3D_0\\</IntDir>
+    <IntDir>..\\..\\output\\Debug\\SampleFBXLoader\\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -144,9 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="JBoxObj.h" />
-    <ClInclude Include="JCamera.h" />
-    <ClInclude Include="JFrustum.h" />
+    <ClInclude Include="JFbxLoader.h" />
     <ClInclude Include="JMap.h" />
     <ClInclude Include="JNode.h" />
     <ClInclude Include="JPlaneObj.h" />
@@ -155,9 +153,7 @@
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JBoxObj.cpp" />
-    <ClCompile Include="JCamera.cpp" />
-    <ClCompile Include="JFrustum.cpp" />
+    <ClCompile Include="JFbxLoader.cpp" />
     <ClCompile Include="JMap.cpp" />
     <ClCompile Include="JNode.cpp" />
     <ClCompile Include="JPlaneObj.cpp" />
@@ -171,8 +167,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Box.hlsl">
-      <FileType>Document</FileType>
+    <FxCompile Include="..\JCoreLib\Box.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
@@ -183,14 +178,9 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Sky.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

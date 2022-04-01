@@ -21,6 +21,13 @@
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 #include <DirectXCollision.h>
+#include <fbxsdk.h>
+
+
+#pragma comment (lib,"libfbxsdk-md.lib")
+#pragma comment (lib,"libxml2-md.lib")
+#pragma comment (lib,"zlib-md.lib")
+
 #pragma comment (lib,"d3d11.lib")
 #pragma comment (lib,"D3DCompiler.lib")
 #pragma comment (lib,"DirectXTK.lib")

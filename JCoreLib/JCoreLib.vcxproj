@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\\..\\include\\dxtex\\;..\\..\\include\\dxtk\\;..\\..\\include\\fmod\\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\\..\\include\\dxtex\\;..\\..\\include\\dxtk\\;..\\..\\include\\fmod\\;..\\..\\include\\fbx\\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -164,11 +164,23 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="JBaseMgr.cpp" />
+    <ClCompile Include="JBoxObj.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="JCamera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="JCollision.cpp" />
     <ClCompile Include="JCore.cpp" />
     <ClCompile Include="JDevice.cpp" />
     <ClCompile Include="JDxObject.cpp" />
     <ClCompile Include="JDxState.cpp" />
+    <ClCompile Include="JFrustum.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="JInput.cpp" />
     <ClCompile Include="JMatrix.cpp" />
     <ClCompile Include="JObject2D.cpp" />
@@ -187,11 +199,23 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JBaseMgr.h" />
+    <ClInclude Include="JBoxObj.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="JCamera.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="JCollision.h" />
     <ClInclude Include="JCore.h" />
     <ClInclude Include="JDevice.h" />
     <ClInclude Include="JDxObject.h" />
     <ClInclude Include="JDxState.h" />
+    <ClInclude Include="JFrustum.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="JInput.h" />
     <ClInclude Include="JMatrix.h" />
     <ClInclude Include="JObject2D.h" />
@@ -208,6 +232,13 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClInclude Include="JWorld.h" />
     <ClInclude Include="JWriteFont.h" />
     <ClInclude Include="TMath.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Box.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

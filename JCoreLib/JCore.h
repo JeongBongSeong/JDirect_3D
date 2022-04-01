@@ -4,9 +4,13 @@
 #include"JInput.h"
 #include"JTImer.h"
 #include "JWriteFont.h"
+#include "JCamera.h"
 
 class JCore : public JDevice
 {
+public: 
+	JCamera* m_pMainCamera;
+	JCamera m_DefaultCamera;
 public:
 	JTimer m_GameTimer;
 	JWriteFont m_dxWrite;

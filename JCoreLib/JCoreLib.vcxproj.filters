@@ -19,6 +19,9 @@
     <Filter Include="math">
       <UniqueIdentifier>{7946b7f2-f883-4c27-a960-03e435eec581}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{00313a05-801c-4116-a767-1bc3a68db481}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JCore.cpp">
@@ -83,6 +86,15 @@
     </ClCompile>
     <ClCompile Include="TMath.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="JBoxObj.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="JCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="JFrustum.cpp">
+      <Filter>Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,5 +164,19 @@
     <ClInclude Include="TMath.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="JCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="JFrustum.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="JBoxObj.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Box.hlsl">
+      <Filter>Camera</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
