@@ -82,6 +82,7 @@ bool JCore::CoreFrame()
     }
     m_GameTimer.Frame();
     JInput::Get().Frame();
+    m_pMainCamera->Frame();
     I_ObjectMgr.Frame();
     I_Sound.Frame();
     Frame();
@@ -101,15 +102,17 @@ bool JCore::CoreRender()
     m_pImmediateContext->OMSetRenderTargets(1, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get());
 
     m_pImmediateContext->PSSetSamplers(0, 1, &JDxState::m_pSSLinear);
+    m_pImmediateContext->PSSetSamplers(1, 1, &JDxState::m_pSSPoint);
+
     m_pImmediateContext->OMSetDepthStencilState(JDxState::g_pDSSDepthEnable, 0x00);
     
     if (m_bWireFrame)
     {
-        m_pImmediateContext->RSSetState(JDxState::g_pRSNoneCullSolid);
+        m_pImmediateContext->RSSetState(JDxState::g_pRSBackCullSolid);
     }
     else
     {
-        m_pImmediateContext->RSSetState(JDxState::g_pRSNoneCullWireFrame);
+        m_pImmediateContext->RSSetState(JDxState::g_pRSBackCullWireFrame);
     }
 
     Render();

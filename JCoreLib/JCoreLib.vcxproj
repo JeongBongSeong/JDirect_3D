@@ -186,7 +186,9 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClCompile Include="JObject2D.cpp" />
     <ClCompile Include="JObject3D.cpp" />
     <ClCompile Include="JObjectMgr.cpp" />
+    <ClCompile Include="JPlaneObj.cpp" />
     <ClCompile Include="JShaderMgr.cpp" />
+    <ClCompile Include="JSkyObj.cpp" />
     <ClCompile Include="JSoundMgr.cpp" />
     <ClCompile Include="JTextureMgr.cpp" />
     <ClCompile Include="JTimer.cpp" />
@@ -221,7 +223,9 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClInclude Include="JObject2D.h" />
     <ClInclude Include="JObject3D.h" />
     <ClInclude Include="JObjectMgr.h" />
+    <ClInclude Include="JPlaneObj.h" />
     <ClInclude Include="JShaderMgr.h" />
+    <ClInclude Include="JSkyObj.h" />
     <ClInclude Include="JSoundMgr.h" />
     <ClInclude Include="JStd.h" />
     <ClInclude Include="JTextureMgr.h" />

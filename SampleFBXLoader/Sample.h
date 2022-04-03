@@ -12,10 +12,6 @@ class Sample : public JCore
 {
 public:
 	JFbxLoader m_FbxObj;
-	//JCamera m_CameraTopView;
-	JMap m_MapObj;
-	JBoxObj m_PlayerObj;
-	std::vector<JBoxObj> m_ObjList;
 	JSkyObj       m_SkyObj;
 public:
 	virtual void	CreateResizeDevice(UINT iWidth, UINT iHeight) override;

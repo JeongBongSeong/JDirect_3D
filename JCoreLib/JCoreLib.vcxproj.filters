@@ -96,6 +96,12 @@
     <ClCompile Include="JFrustum.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="JSkyObj.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="JPlaneObj.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="JCore.h">
@@ -172,6 +178,12 @@
     </ClInclude>
     <ClInclude Include="JBoxObj.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="JPlaneObj.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="JSkyObj.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

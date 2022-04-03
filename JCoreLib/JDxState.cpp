@@ -11,6 +11,8 @@ ID3D11SamplerState* JDxState::m_pSSLinear = nullptr;
 ID3D11SamplerState* JDxState::m_pSSPoint = nullptr;
 ID3D11DepthStencilState* JDxState::g_pDSSDepthEnable = nullptr;
 ID3D11DepthStencilState* JDxState::g_pDSSDepthDisable = nullptr;
+ID3D11DepthStencilState* JDxState::g_pDSSDepthEnableWriteDisable = nullptr;
+ID3D11DepthStencilState* JDxState::g_pDSSDepthDisableWriteDisable = nullptr;
 
 bool JDxState::SetState(ID3D11Device* pd3dDevice)
 {
@@ -59,14 +61,11 @@ bool JDxState::SetState(ID3D11Device* pd3dDevice)
 	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSNoneCullWireFrame))) return hr;
 	//back
 	rsDesc.CullMode = D3D11_CULL_BACK;
-	rsDesc.FillMode = D3D11_FILL_WIREFRAME;
-	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSBackCullWireFrame))) return hr;
-	
-	rsDesc.FillMode = D3D11_FILL_WIREFRAME;
+	rsDesc.FillMode = D3D11_FILL_SOLID;
 	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSBackCullSolid))) return hr;
-
-
-
+	
+	rsDesc.FillMode = D3D11_FILL_WIREFRAME; 
+	if (FAILED(hr = pd3dDevice->CreateRasterizerState(&rsDesc, &JDxState::g_pRSBackCullWireFrame))) return hr;
 
 
 	D3D11_DEPTH_STENCIL_DESC dsDescDepth;
@@ -98,6 +97,17 @@ bool JDxState::SetState(ID3D11Device* pd3dDevice)
 	{
 		return hr;
 	}
+	dsDescDepth.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	if (FAILED(hr = pd3dDevice->CreateDepthStencilState(&dsDescDepth, &g_pDSSDepthDisableWriteDisable)))
+	{
+		return hr;
+	}
+	dsDescDepth.DepthEnable = TRUE;
+	dsDescDepth.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	if (FAILED(hr = pd3dDevice->CreateDepthStencilState(&dsDescDepth, &g_pDSSDepthEnableWriteDisable)))
+	{
+		return hr;
+	}
 	return true;
 }
 bool JDxState::Release()
@@ -108,6 +118,8 @@ bool JDxState::Release()
 	if (g_pDSSDepthDisable) g_pDSSDepthDisable->Release();
 	if (m_pAlphaBlend) m_pAlphaBlend->Release();
 	if (m_pAlphaBlendDisable) m_pAlphaBlendDisable->Release();
+	if (g_pDSSDepthEnableWriteDisable) g_pDSSDepthEnableWriteDisable->Release();
+	if (g_pDSSDepthDisableWriteDisable) g_pDSSDepthDisableWriteDisable->Release();
 	m_pAlphaBlend = nullptr;
 	m_pAlphaBlendDisable = nullptr;
 

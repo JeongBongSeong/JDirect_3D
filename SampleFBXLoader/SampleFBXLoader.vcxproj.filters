@@ -27,13 +27,7 @@
     <ClInclude Include="JNode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="JPlaneObj.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="JQuadTree.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="JSkyObj.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Sample.h">
@@ -50,13 +44,7 @@
     <ClCompile Include="JNode.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="JPlaneObj.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="JQuadTree.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="JSkyObj.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="JFbxLoader.cpp">
@@ -69,6 +57,6 @@
   <ItemGroup>
     <FxCompile Include="Map.hlsl" />
     <FxCompile Include="Sky.hlsl" />
-    <FxCompile Include="..\JCoreLib\Box.hlsl" />
+    <FxCompile Include="Box.hlsl" />
   </ItemGroup>
 </Project>
