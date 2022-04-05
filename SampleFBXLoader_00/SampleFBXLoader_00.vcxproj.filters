@@ -36,9 +36,6 @@
     <ClInclude Include="JFbxLoader.h">
       <Filter>fbx</Filter>
     </ClInclude>
-    <ClInclude Include="JFbxVertexLoader.h">
-      <Filter>fbx</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JMap.cpp">
@@ -57,6 +54,9 @@
       <Filter>fbx</Filter>
     </ClCompile>
     <ClCompile Include="JFbxVertexLoader.cpp">
+      <Filter>fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="JFbxObj.cpp">
       <Filter>fbx</Filter>
     </ClCompile>
   </ItemGroup>

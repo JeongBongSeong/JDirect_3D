@@ -181,195 +181,36 @@ void JFbxLoader::ReadTextureCoord(FbxMesh* pFbxMesh, FbxLayerElementUV* pUVSet,
 	}
 	}
 }
-void    JFbxLoader::PreProcess(FbxNode* node, FbxNode* parent)
+
+int JFbxLoader::GetSubMaterialIndex(int iPoly, FbxLayerElementMaterial* pMaterialSetList)
 {
-	// camera, light, mesh, shape, animation
-	FbxMesh* pMesh = node->GetMesh();
-	if (pMesh)
+	int iSubMtrl = 0;
+	if (pMaterialSetList)
 	{
-		JFbxObj* fbx = new JFbxObj;
-		fbx->m_pFbxParent = parent;
-		fbx->m_pFbxNode = node;
-		m_DrawList.push_back(fbx);
-	}
-	int iNumChild = node->GetChildCount();
-	for (int iNode = 0; iNode < iNumChild; iNode++)
-	{
-		FbxNode* child = node->GetChild(iNode);
-		PreProcess(child, node);
-	}
-}
-bool	JFbxLoader::Load(std::string filename)
-{
-	bool bRet = m_pFbxImporter->Initialize(filename.c_str());
-	bRet = m_pFbxImporter->Import(m_pFbxScene);
-	m_pRootNode = m_pFbxScene->GetRootNode();
-	PreProcess(m_pRootNode, nullptr);
-
-	for (int iObj = 0; iObj < m_DrawList.size(); iObj++)
-	{
-		ParseMesh(m_DrawList[iObj]);
-	}
-	return true;
-}
-void	JFbxLoader::ParseMesh(JFbxObj* pObject)
-{
-	FbxMesh* pFbxMesh = pObject->m_pFbxNode->GetMesh();
-	if (pFbxMesh)
-	{
-		// 기하행렬(초기 정점 위치를 변환할 때 사용)
-		// transform
-		FbxAMatrix geom;
-		FbxVector4 trans = pObject->m_pFbxNode->GetGeometricTranslation(FbxNode::eSourcePivot);
-		FbxVector4 rot = pObject->m_pFbxNode->GetGeometricRotation(FbxNode::eSourcePivot);
-		FbxVector4 scale = pObject->m_pFbxNode->GetGeometricScaling(FbxNode::eSourcePivot);
-		geom.SetT(trans);
-		geom.SetR(rot);
-		geom.SetS(scale);
-
-		FbxAMatrix normalMatrix = geom;
-		normalMatrix = normalMatrix.Inverse();
-		normalMatrix = normalMatrix.Transpose();
-
-		// 레이어 ( 1번에 랜더링, 여러번에 걸쳐서 랜더링 개념)
-		std::vector<FbxLayerElementUV*> VertexUVSet;
-		std::vector<FbxLayerElementVertexColor*> VertexColorSet;
-		std::vector<FbxLayerElementMaterial*> MaterialSet;
-		int iLayerCount = pFbxMesh->GetLayerCount();
-
-		//레이어가 몇개가 사용되든 밑바탕(위치 Pos)은 고정이다 
-		for (int iLayer = 0; iLayer < iLayerCount; iLayer++)
+		//메터리얼셋의 맵핑 모드를 가져온다 여기서 맵핑 값은 아마 eByPolygon이다.
+		switch (pMaterialSetList->GetMappingMode())
 		{
-			FbxLayer* pFbxLayer = pFbxMesh->GetLayer(iLayer);
-			if (pFbxLayer->GetUVs() != nullptr)
-			{
-				VertexUVSet.push_back(pFbxLayer->GetUVs());
-			}
-			if (pFbxLayer->GetVertexColors() != nullptr)
-			{
-				VertexColorSet.push_back(pFbxLayer->GetVertexColors());
-			}
-			if (pFbxLayer->GetMaterials() != nullptr)
-			{
-				MaterialSet.push_back(pFbxLayer->GetMaterials());
-			}
-		}
-
-		int iNumMtrl = pObject->m_pFbxNode->GetMaterialCount();
-		for (int iMtrl = 0; iMtrl < iNumMtrl; iMtrl++)
+		case FbxLayerElement::eByPolygon:
 		{
-			FbxSurfaceMaterial* pSurface = pObject->m_pFbxNode->GetMaterial(iMtrl);
-			if (pSurface)
+			switch (pMaterialSetList->GetReferenceMode())
 			{
-				std::string texturename = ParseMaterial(pSurface);
-				pObject->m_szTexFileName = L"../../data/fbx/";
-				pObject->m_szTexFileName += to_mw(texturename);
-			}
-		}
-
-		int iBasePolyIndex = 0;
-		// 삼각형, 사각형
-		int iNumPolyCount = pFbxMesh->GetPolygonCount();
-		FbxVector4* pVertexPositions = pFbxMesh->GetControlPoints();
-		int iNumFace = 0;
-		for (int iPoly = 0; iPoly < iNumPolyCount; iPoly++)
-		{
-			int iPolySize = pFbxMesh->GetPolygonSize(iPoly);
-			iNumFace = iPolySize - 2;
-			for (int iFace = 0; iFace < iNumFace; iFace++)
+			case FbxLayerElement::eIndex:
 			{
-				// 1  2
-				// 0  3
-				// (max)021,032 ->  (dx)012, 023
-				int VertexIndex[3] = { 0, iFace + 2, iFace + 1 };
-
-				int CornerIndex[3];
-				CornerIndex[0] = pFbxMesh->GetPolygonVertex(iPoly, VertexIndex[0]);
-				CornerIndex[1] = pFbxMesh->GetPolygonVertex(iPoly, VertexIndex[1]);
-				CornerIndex[2] = pFbxMesh->GetPolygonVertex(iPoly, VertexIndex[2]);
-				for (int iIndex = 0; iIndex < 3; iIndex++)
-				{
-					JVertex tVertex;
-					// Max(x,z,y) ->(dx)x,y,z    
-					FbxVector4 v = pVertexPositions[CornerIndex[iIndex]];
-					v = geom.MultT(v);
-					tVertex.p.x = v.mData[0];
-					tVertex.p.y = v.mData[2];
-					tVertex.p.z = v.mData[1];
-
-					// uv
-					int u[3];
-					u[0] = pFbxMesh->GetTextureUVIndex(iPoly, VertexIndex[0]);
-					u[1] = pFbxMesh->GetTextureUVIndex(iPoly, VertexIndex[1]);
-					u[2] = pFbxMesh->GetTextureUVIndex(iPoly, VertexIndex[2]);
-					if (VertexUVSet.size() > 0)
-					{
-						FbxLayerElementUV* pUVSet = VertexUVSet[0];
-						FbxVector2 uv;
-						ReadTextureCoord(
-							pFbxMesh,
-							pUVSet,
-							CornerIndex[iIndex],
-							u[iIndex],
-							uv);
-						tVertex.t.x = uv.mData[0];
-						tVertex.t.y = 1.0f - uv.mData[1];
-					}
-
-					FbxColor color = FbxColor(1, 1, 1, 1);
-					if (VertexColorSet.size() > 0)
-					{
-						color = ReadColor(pFbxMesh,
-							VertexColorSet.size(),
-							VertexColorSet[0],
-							CornerIndex[iIndex],
-							iBasePolyIndex + VertexIndex[iIndex]);
-					}
-					tVertex.c.x = color.mRed;
-					tVertex.c.y = color.mGreen;
-					tVertex.c.z = color.mBlue;
-					tVertex.c.w = 1;
-
-
-					FbxVector4 normal = ReadNormal(pFbxMesh,
-						CornerIndex[iIndex],
-						iBasePolyIndex + VertexIndex[iIndex]);
-					normal = normalMatrix.MultT(normal);
-					tVertex.n.x = normal.mData[0]; // x
-					tVertex.n.y = normal.mData[2]; // z
-					tVertex.n.z = normal.mData[1]; // y
-
-					pObject->m_VertexList.push_back(tVertex);//36
-				}
+				//Index의 경우 순서대로
+				iSubMtrl = iPoly;
+			}break;
+			case FbxLayerElement::eIndexToDirect:
+			{
+				//IndextoDirect의 경우 DirectArray에 저장된 값이 맵핑 되어있음
+				//실제 데이터는 Direct Array에 저장되어 있고, Index Array에는 Index값이 저장되어있음
+				iSubMtrl = pMaterialSetList->GetIndexArray().GetAt(iPoly);
+			}break;
 			}
+		}break;
 
-			iBasePolyIndex += iPolySize;
+		default:
+			break;
 		}
 	}
-}
-bool	JFbxLoader::Init()
-{
-	m_pFbxManager = FbxManager::Create();
-	m_pFbxImporter = FbxImporter::Create(m_pFbxManager, "");
-	m_pFbxScene = FbxScene::Create(m_pFbxManager, "");
-	return true;
-}
-bool	JFbxLoader::Frame()
-{
-	return true;
-}
-bool	JFbxLoader::Render()
-{
-	return true;
-}
-bool	JFbxLoader::Release()
-{
-	for (int iObj = 0; iObj < m_DrawList.size(); iObj++)
-	{
-		m_DrawList[iObj]->Release();
-	}
-	m_pFbxScene->Destroy();
-	m_pFbxImporter->Destroy();
-	m_pFbxManager->Destroy();
-	return true;
+	return iSubMtrl;
 }

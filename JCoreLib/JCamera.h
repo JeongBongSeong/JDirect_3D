@@ -4,6 +4,8 @@
 class JCamera : public JFrustum
 {
 public:
+	bool	m_bSpaceRun = false;
+	float m_bSpeed = 100.0f;
 	float				m_fRadius = 10.0f;
 	T::TQuaternion		m_qRotation;
 	T::TVector3			m_vCamera;

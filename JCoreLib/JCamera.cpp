@@ -73,23 +73,31 @@ bool JCamera::Frame()
 {
 	// 마우스 회전
 	T::TVector2 dir = JInput::Get().GetDelta();
+	if (JInput::Get().GetKey(VK_SPACE) == KEY_HOLD)
+		m_bSpaceRun = true;
+	else
+		m_bSpaceRun = false;
+
+	if (!m_bSpaceRun)
+		m_fSpeed = 100.0f;
+	else
+		m_fSpeed = 300.0f;
 
 	if (JInput::Get().GetKey('A') || JInput::Get().GetKey(VK_LEFT))
 	{
-		MoveSide(-g_fSecPerFrame * 1000.0f);
+		MoveSide(-g_fSecPerFrame * m_fSpeed);
 	}
 	if (JInput::Get().GetKey('D') || JInput::Get().GetKey(VK_RIGHT))
 	{
-		MoveSide(g_fSecPerFrame * 1000.0f);
+		MoveSide(g_fSecPerFrame * m_fSpeed);
 	}
-	//m_Camera.MoveLook(10.0f);
 	if (JInput::Get().GetKey('W') || JInput::Get().GetKey(VK_UP))
 	{
-		MoveLook(g_fSecPerFrame * 1000.0f);
+		MoveLook(g_fSecPerFrame * m_fSpeed);
 	}
 	if (JInput::Get().GetKey('S') || JInput::Get().GetKey(VK_DOWN))
 	{
-		MoveLook(-g_fSecPerFrame * 1000.0f);
+		MoveLook(-g_fSecPerFrame * m_fSpeed);
 	}
 	Update(T::TVector4(-dir.x, -dir.y, 0, 0));
 	//T::D3DXMatrixLookAtLH(&m_matView,&m_vCamera, &m_vTarget, &m_vDefaultUp);

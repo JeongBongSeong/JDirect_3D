@@ -8,6 +8,7 @@
 #include "JQuadtree.h" 
 #include "JFbxLoader.h"
 #define  MAX_NUM_OBJECTS 100
+
 class Sample : public JCore
 {
 public:
