@@ -51,18 +51,24 @@ bool	Sample::Init()
 }
 bool	Sample::Frame()
 {
+	static float fDir = 1.0f;
+	static float fTime = 0.0f;
+	fTime += g_fSecPerFrame * 30 * fDir * 1.0f;
+	if (fTime >= 50.0f)
+	{
+		fDir *= -1.0f;
+	}
+	if (fTime <= 0.0f)
+	{
+		fDir *= -1.0f;
+	}
+	int iFrame = fTime;
+	iFrame = min(50, iFrame);
+	iFrame = max(0, iFrame);
 	for (int iObj = 0; iObj < m_FbxObj.m_TreeList.size(); iObj++)
 	{
-		T::TMatrix matLocal1 = m_FbxObj.m_TreeList[iObj]->m_matLocal;
-		T::TMatrix matParent1;
-
-		//부모의 로컬을 자식에게 곱한다. (부모가 이동을하면 그만큼 자식도 이동해야하기 때문)
-		if (m_FbxObj.m_TreeList[iObj]->m_pParentObj != nullptr)
-		{
-			matParent1 = m_FbxObj.m_TreeList[iObj]->m_pParentObj->m_matLocal;
-		}
-		T::TMatrix matWorld1 = matLocal1 * matParent1;
-		m_FbxObj.m_TreeList[iObj]->m_matAnim = matWorld1;		//draw와 노드의 주소를 공유하고 있기때문에 같이 적용된다.
+		JFbxObj* pObject = m_FbxObj.m_TreeList[iObj];
+		m_FbxObj.m_TreeList[iObj]->m_matAnim = pObject->m_AnimTrack[iFrame].matTrack;
 	}
 	return true;
 }

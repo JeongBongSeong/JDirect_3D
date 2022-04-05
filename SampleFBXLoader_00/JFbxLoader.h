@@ -2,7 +2,11 @@
 
 #include "JObject3D.h"
 #include <fbxsdk.h>
-
+struct JTrack
+{
+	UINT	iFrame;
+	T::TMatrix matTrack;
+};
 class JFbxObj : public JObject3D
 {
 public:
@@ -21,6 +25,7 @@ public:
 	std::vector<JSubVertex>	m_pSubVertexList;
 	std::vector<ID3D11Buffer*> m_pVBList;
 	std::vector<JTexture*>	m_pTextureList;
+	std::vector<JTrack> m_AnimTrack;
 public:
 	virtual bool    SetVertexData() override;
 	virtual bool	CreateVertexBuffer()override;
@@ -58,6 +63,9 @@ public:
 	int GetSubMaterialIndex(int iPoly, FbxLayerElementMaterial* pMaterialSetList);
 	T::TMatrix     DxConvertMatrix(T::TMatrix m);
 	T::TMatrix     ConvertMatrix(FbxMatrix& m);
+public:
+	T::TMatrix     ConvertAMatrix(FbxAMatrix& m);
+	void		ParseAnimation();
 public:
 	virtual bool Init();
 	virtual bool Frame();

@@ -23,7 +23,49 @@ T::TMatrix     JFbxLoader::ConvertMatrix(FbxMatrix& m)
 	}
 	return mat;
 }
+T::TMatrix     JFbxLoader::ConvertAMatrix(FbxAMatrix& m)
+{
+	TMatrix mat;
+	float* pMatArray = reinterpret_cast<float*>(&mat);
+	double* pSrcArray = reinterpret_cast<double*>(&m);
+	for (int i = 0; i < 16; i++)
+	{
+		pMatArray[i] = pSrcArray[i];
+	}
+	return mat;
+}
+void		JFbxLoader::ParseAnimation()
+{
+	FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
+	FbxAnimStack* stack = m_pFbxScene->GetSrcObject<FbxAnimStack>(0);
+	FbxString TakeName = stack->GetName();
+	FbxTakeInfo* TakeInfo = m_pFbxScene->GetTakeInfo(TakeName);
+	FbxTimeSpan LocalTimeSpan = TakeInfo->mLocalTimeSpan;
+	FbxTime start = LocalTimeSpan.GetStart();
+	FbxTime end = LocalTimeSpan.GetStop();
+	FbxTime Duration = LocalTimeSpan.GetDuration();
 
+	FbxTime::EMode TimeMode = FbxTime::GetGlobalTimeMode();
+	FbxLongLong s = start.GetFrameCount(TimeMode);
+	FbxLongLong n = end.GetFrameCount(TimeMode);
+
+	// 1초에 30 frame 
+	// 1Frame = 160 Tick
+	// 50 Frame 
+	FbxTime time;
+	JTrack tTrack;
+	for (FbxLongLong t = s; t <= n; t++)
+	{
+		time.SetFrame(t, TimeMode);
+		for (int iObj = 0; iObj < m_TreeList.size(); iObj++)
+		{
+			FbxAMatrix matGlobal = m_TreeList[iObj]->m_pFbxNode->EvaluateGlobalTransform(time);
+			tTrack.iFrame = t;
+			tTrack.matTrack = DxConvertMatrix(ConvertAMatrix(matGlobal));
+			m_TreeList[iObj]->m_AnimTrack.push_back(tTrack);
+		}
+	}
+}
 //노드와 부모노트   (처음에는 rootNode와 nullptr(루트이기때문)을 받는다.)
 void    JFbxLoader::PreProcess(FbxNode* node, JFbxObj* fbxParent)
 {
@@ -70,6 +112,7 @@ bool	JFbxLoader::Load(std::string filename)
 	bRet = m_pFbxImporter->Import(m_pFbxScene);
 	m_pRootNode = m_pFbxScene->GetRootNode();
 	PreProcess(m_pRootNode, nullptr);
+	ParseAnimation();
 
 	for (int iObj = 0; iObj < m_DrawList.size(); iObj++)
 	{
