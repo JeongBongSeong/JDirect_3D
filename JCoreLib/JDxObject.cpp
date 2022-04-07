@@ -47,14 +47,16 @@ bool    JDxObject::SetConstantData()
 	m_ConstantList.Timer.z = 0.0f;
 	m_ConstantList.Timer.w = 0.0f;
 
-	ZeroMemory(&m_ConstantList, sizeof(JLightData));
+	ZeroMemory(&m_LightConstantList, sizeof(JLightData));
 
 	m_LightConstantList.vLightDir.x = 0.0f;
 	m_LightConstantList.vLightDir.y = 1.0f;
 	m_LightConstantList.vLightDir.z = 0.0f;
-	m_LightConstantList.vLightPos.x = 1.0f;
-	m_LightConstantList.vLightPos.y = 0.0f;
+	m_LightConstantList.vLightDir.w = 1.0f;
+	m_LightConstantList.vLightPos.x = 0.0f;
+	m_LightConstantList.vLightPos.y = 1.0f;
 	m_LightConstantList.vLightPos.z = 0.0f;
+	m_LightConstantList.vLightPos.w = 0.0f;
 	return true;
 }
 bool    JDxObject::CreateVertexShader(const TCHAR* szFile)
@@ -156,6 +158,9 @@ bool	JDxObject::CreateInputLayout()
 		{"NORMAL",0, DXGI_FORMAT_R32G32B32_FLOAT, 0,12,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{"COLOR",0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,24,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{"TEXCOORD",0, DXGI_FORMAT_R32G32_FLOAT, 0,40,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
+		//{"",0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1,0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		//{"",0, DXGI_FORMAT_R32G32_FLOAT, 1,16,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 	UINT NumElements = sizeof(layout) / sizeof(layout[0]);
 	HRESULT hr = m_pd3dDevice->CreateInputLayout(
@@ -275,6 +280,8 @@ bool	JDxObject::Render()
 	m_pContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	m_pContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 	m_pContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pContext->VSSetConstantBuffers(1, 1, &m_pLightConstantBuffer);
+	m_pContext->PSSetConstantBuffers(1, 1, &m_pLightConstantBuffer);
 
 	m_pContext->IASetPrimitiveTopology(
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST

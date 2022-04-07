@@ -38,6 +38,8 @@ void		JFbxLoader::ParseAnimation()
 {
 	FbxTime::SetGlobalTimeMode(FbxTime::eFrames30);
 	FbxAnimStack* stack = m_pFbxScene->GetSrcObject<FbxAnimStack>(0);
+	if (stack == nullptr) return;
+
 	FbxString TakeName = stack->GetName();
 	FbxTakeInfo* TakeInfo = m_pFbxScene->GetTakeInfo(TakeName);
 	FbxTimeSpan LocalTimeSpan = TakeInfo->mLocalTimeSpan;
@@ -66,6 +68,7 @@ void		JFbxLoader::ParseAnimation()
 		}
 	}
 }
+
 //노드와 부모노트   (처음에는 rootNode와 nullptr(루트이기때문)을 받는다.)
 void    JFbxLoader::PreProcess(FbxNode* node, JFbxObj* fbxParent)
 {
@@ -261,7 +264,7 @@ void	JFbxLoader::ParseMesh(JFbxObj* pObject)
 					tVertex.c.x = color.mRed;
 					tVertex.c.y = color.mGreen;
 					tVertex.c.z = color.mBlue;
-					tVertex.c.w = 1;
+					tVertex.c.w = pObject->m_iIndex;
 
 
 					FbxVector4 normal = ReadNormal(pFbxMesh,
@@ -281,6 +284,26 @@ void	JFbxLoader::ParseMesh(JFbxObj* pObject)
 		}
 	}
 }
+bool JFbxLoader::CreateConstantBuffer(ID3D11Device* pDevice)
+{
+	HRESULT hr;
+	//gpu메모리에 버퍼 할당(원하는 할당 크기)
+	D3D11_BUFFER_DESC bd;
+	ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
+	bd.ByteWidth = sizeof(JBoneWorld);
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+	//D3D11_SUBRESOURCE_DATA sd;
+	//ZeroMemory(&sd, sizeof(D3D11_SUBRESOURCE_DATA));
+	//sd.pSysMem = &m_matBoneArray;
+
+	if (FAILED(hr = pDevice->CreateBuffer(&bd, NULL, &m_pBoneCB)))
+	{
+		return false;
+	}
+	return true;
+}
 bool	JFbxLoader::Init()
 {
 	m_pFbxManager = FbxManager::Create();
@@ -298,6 +321,8 @@ bool	JFbxLoader::Render()
 }
 bool	JFbxLoader::Release()
 {
+	if (m_pBoneCB)m_pBoneCB->Release();
+	m_pBoneCB = nullptr;
 	for (int iObj = 0; iObj < m_DrawList.size(); iObj++)
 	{
 		m_DrawList[iObj]->Release();

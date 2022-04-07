@@ -1,10 +1,12 @@
 #pragma once
 #include"JObject2D.h"
+#include"JObject3D.h"
 using CollisionPlayerFunction = std::function<void(JBaseObject*, DWORD)>;
 using CollisionFunction = std::function<void(JBaseObject*, DWORD)>;
 using SelectFunction = std::function<void(JBaseObject*, DWORD)>;
 class JObjectMgr : public JSingleton<JObjectMgr>
 {
+	friend class JSingleton<JTextureMgr>;
 private:
 	int m_iExecuteCollisionID;
 	int m_iExecuteCollisionPlayerID;
@@ -25,7 +27,7 @@ public:
 	typedef std::map<int, SelectFunction>::iterator FunctionIterator;
 	std::map<int, SelectFunction> m_fnSelectExecute;
 public:
-	void AddPlayerCollisionExecute(JBaseObject* owner, CollisionFunction func);
+	void AddPlayerCollisionExecute(JBaseObject* owner, CollisionPlayerFunction func);
 	void AddCollisionExecute(JBaseObject* owner, CollisionFunction func);
 	void AddSelectExecute(JBaseObject* owner, CollisionFunction func);
 	void DeletePlayerCollisionExecute(JBaseObject* owner);

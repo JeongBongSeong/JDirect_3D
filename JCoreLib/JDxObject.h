@@ -125,6 +125,10 @@ struct JConstantData
 	T::TVector4 Color;
 	T::TVector4 Timer;
 };
+struct JBoneWorld
+{
+	T::TMatrix  matBoneWorld[255];
+};
 struct JLightData
 {
 	T::TVector4 vLightDir;

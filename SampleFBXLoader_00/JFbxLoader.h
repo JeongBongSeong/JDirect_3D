@@ -12,7 +12,7 @@ class JFbxObj : public JObject3D
 public:
 	T::TMatrix m_matLocal;
 	T::TMatrix m_matAnim;
-	int	m_iIndex = 1;
+	int	m_iIndex = -1;
 public:
 	FbxNode* m_pFbxParent = nullptr;
 	FbxNode* m_pFbxNode = nullptr;
@@ -37,6 +37,11 @@ public:
 class JFbxLoader : public JObject3D
 {
 public:
+	float m_fDir = 1.0f;
+	float m_fTime = 0.0f;
+	float m_fSpeed = 1.0f;
+	JBoneWorld	  m_matBoneArray;
+public:
 	FbxManager* m_pFbxManager;
 	FbxImporter* m_pFbxImporter;
 	FbxScene* m_pFbxScene;
@@ -44,8 +49,8 @@ public:
 public:
 	std::vector<JFbxObj*> m_DrawList;	//°ú°Å OBJ
 	std::vector<JFbxObj*> m_TreeList;
-	
 
+	ID3D11Buffer* m_pBoneCB = nullptr;
 public:
 	virtual bool Load(std::string filename);
 	virtual void PreProcess(FbxNode* node, JFbxObj* fbxParent);
@@ -66,6 +71,7 @@ public:
 public:
 	T::TMatrix     ConvertAMatrix(FbxAMatrix& m);
 	void		ParseAnimation();
+	virtual bool CreateConstantBuffer(ID3D11Device* pDevice);
 public:
 	virtual bool Init();
 	virtual bool Frame();

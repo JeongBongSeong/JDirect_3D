@@ -12,7 +12,7 @@
 class Sample : public JCore
 {
 public:
-	JFbxLoader m_FbxObj;
+	std::vector<JFbxLoader> m_FbxObj;
 	JSkyObj m_SkyObj;
 public:
 	virtual void	CreateResizeDevice(UINT iWidth, UINT iHeight) override;
