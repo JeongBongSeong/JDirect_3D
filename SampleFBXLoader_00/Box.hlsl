@@ -39,7 +39,7 @@ VS_OUTPUT VS(VS_INPUT v)
 	uint iIndex = v.c.w;
 	float4 vLocal = float4(v.p.xyz, 1.0f);// float4(v.p.x, v.p.y, v.p.z, 1.0f);
 	float4 vWorld = mul(vLocal, g_matBoneWorld[iIndex]);
-	vWorld = mul(vWorld, g_matWorld);
+	vWorld = mul(vWorld, g_matWorld); 
 
 	float4 vView = mul(vWorld, g_matView);
 	float4 vProj = mul(vView, g_matProj);
@@ -47,7 +47,7 @@ VS_OUTPUT VS(VS_INPUT v)
 	float3 vNormal = mul(v.n, (float3x3)g_matWorld);
 	pOut.n = normalize(vNormal);
 	pOut.t = v.t;
-	float fDot = max(0.5f, dot(pOut.n, -vLightDir.xyz));
+	float fDot = max(0.0f, dot(pOut.n, -vLightDir.xyz));
 	
 	float4 vColor = float4(v.c.xyz, 1.0f);
 	pOut.c = vColor * float4(fDot, fDot, fDot, 1);// *Color0;
