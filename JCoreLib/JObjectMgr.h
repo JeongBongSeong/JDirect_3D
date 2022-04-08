@@ -1,10 +1,10 @@
 #pragma once
 #include"JObject2D.h"
-#include"JObject3D.h"
+#include"JFbxImporter.h"
 using CollisionPlayerFunction = std::function<void(JBaseObject*, DWORD)>;
 using CollisionFunction = std::function<void(JBaseObject*, DWORD)>;
 using SelectFunction = std::function<void(JBaseObject*, DWORD)>;
-class JObjectMgr : public JSingleton<JObjectMgr>
+class JObjectMgr : public JSingleton<JFbxImporter, JObjectMgr>
 {
 	friend class JSingleton<JTextureMgr>;
 private:

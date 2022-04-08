@@ -186,9 +186,4 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Box.hlsl">
-      <Filter>Camera</Filter>
-    </FxCompile>
-  </ItemGroup>
 </Project>

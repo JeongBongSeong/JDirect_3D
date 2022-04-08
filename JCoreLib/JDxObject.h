@@ -165,8 +165,8 @@ public:
 	ID3D11DeviceContext* m_pContext = nullptr;
 
 public:
-	void    SetDevice(ID3D11Device* m_pd3dDevice, ID3D11DeviceContext* m_pContext);
-	virtual bool LoadTexture(const TCHAR* szColorFileName, const TCHAR* szMaskFileName);
+	void			SetDevice(ID3D11Device* m_pd3dDevice, ID3D11DeviceContext* m_pContext);
+	virtual bool	LoadTexture(const TCHAR* szColorFileName, const TCHAR* szMaskFileName);
 	virtual bool    SetVertexData();
 	virtual bool	SetIndexData();
 	virtual bool	SetConstantData();
@@ -181,6 +181,7 @@ public:
 public:
 	virtual bool	Init();
 	virtual bool	Frame();
+	virtual bool	Draw();
 	virtual bool	PreRender();
 	virtual bool	Render();
 	virtual bool	PostRender();

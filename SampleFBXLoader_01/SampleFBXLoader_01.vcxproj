@@ -21,32 +21,32 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3ad30ece-7b2f-4244-8b3a-5e74766b37c5}</ProjectGuid>
-    <RootNamespace>JCoreLib</RootNamespace>
+    <ProjectGuid>{b30b3513-2b6a-4189-98bf-3bdb718c267c}</ProjectGuid>
+    <RootNamespace>SampleFBXLoader_01</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -79,23 +79,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\\..\\output\\Debug\\</OutDir>
-    <IntDir>..\\..\\output\\Debug\\JCoreLib\\</IntDir>
+    <IntDir>..\\..\\output\\Debug\\SampleFBXLoader\\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\\..\\output\\</OutDir>
-    <IntDir>..\\..\\output\\JCoreLib\\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -105,12 +102,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -120,24 +116,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\\..\\include\\dxtex\\;..\\..\\include\\dxtk\\;..\\..\\include\\fmod\\;..\\..\\include\\fbx\\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\\..\\include\\JCore3D\\;..\\..\\include\\dxtk\\;..\\..\\include\\JCoreNetwork\\;..\\..\\include\\fmod\\;..\\..\\include\\fbx\\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\\..\\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DirectXTK.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "*.h" "..\\..\\include\\JCore3D\\"
-copy "..\\..\\output\\Debug\\JCoreLib.lib" "..\\..\\lib\\JCoreLib.lib"
-</Command>
-    </PostBuildEvent>
-    <Lib>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -145,97 +133,39 @@ copy "..\\..\\output\\Debug\\JCoreLib.lib" "..\\..\\lib\\JCoreLib.lib"
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "..\\..\\output\\JCoreLib.lib" "..\\..\\JCoreLib\\lib\\JCoreLib.lib"
-copy "*.h" "..\\..\\JCoreLib\\include"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="JBaseMgr.cpp" />
-    <ClCompile Include="JBoxObj.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="JCamera.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="JCollision.cpp" />
-    <ClCompile Include="JCore.cpp" />
-    <ClCompile Include="JDevice.cpp" />
-    <ClCompile Include="JDxObject.cpp" />
-    <ClCompile Include="JDxState.cpp" />
-    <ClCompile Include="JFrustum.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="JInput.cpp" />
-    <ClCompile Include="JMatrix.cpp" />
-    <ClCompile Include="JObject2D.cpp" />
-    <ClCompile Include="JObject3D.cpp" />
-    <ClCompile Include="JObjectMgr.cpp" />
-    <ClCompile Include="JPlaneObj.cpp" />
-    <ClCompile Include="JShaderMgr.cpp" />
-    <ClCompile Include="JSkyObj.cpp" />
-    <ClCompile Include="JSoundMgr.cpp" />
-    <ClCompile Include="JTextureMgr.cpp" />
-    <ClCompile Include="JTimer.cpp" />
-    <ClCompile Include="JVector2.cpp" />
-    <ClCompile Include="JVector3.cpp" />
-    <ClCompile Include="JWindow.cpp" />
-    <ClCompile Include="JWorld.cpp" />
-    <ClCompile Include="JWriteFont.cpp" />
-    <ClCompile Include="TMath.cpp" />
+    <ClInclude Include="JFbxLoader.h" />
+    <ClInclude Include="JFbxImporter.h" />
+    <ClInclude Include="JFbxObj.h" />
+    <ClInclude Include="JMap.h" />
+    <ClInclude Include="JNode.h" />
+    <ClInclude Include="JQuadTree.h" />
+    <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="JBaseMgr.h" />
-    <ClInclude Include="JBoxObj.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="JCamera.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="JCollision.h" />
-    <ClInclude Include="JCore.h" />
-    <ClInclude Include="JDevice.h" />
-    <ClInclude Include="JDxObject.h" />
-    <ClInclude Include="JDxState.h" />
-    <ClInclude Include="JFrustum.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="JInput.h" />
-    <ClInclude Include="JMatrix.h" />
-    <ClInclude Include="JObject2D.h" />
-    <ClInclude Include="JObject3D.h" />
-    <ClInclude Include="JObjectMgr.h" />
-    <ClInclude Include="JPlaneObj.h" />
-    <ClInclude Include="JShaderMgr.h" />
-    <ClInclude Include="JSkyObj.h" />
-    <ClInclude Include="JSoundMgr.h" />
-    <ClInclude Include="JStd.h" />
-    <ClInclude Include="JTextureMgr.h" />
-    <ClInclude Include="JTimer.h" />
-    <ClInclude Include="JVector2.h" />
-    <ClInclude Include="JVector3.h" />
-    <ClInclude Include="JWindow.h" />
-    <ClInclude Include="JWorld.h" />
-    <ClInclude Include="JWriteFont.h" />
-    <ClInclude Include="TMath.h" />
+    <ClCompile Include="JFbxImporter.cpp" />
+    <ClCompile Include="JFbxModel.cpp" />
+    <ClCompile Include="JFbxObj.cpp" />
+    <ClCompile Include="JFbxVertexLoader.cpp" />
+    <ClCompile Include="JMap.cpp" />
+    <ClCompile Include="JNode.cpp" />
+    <ClCompile Include="JQuadTree.cpp" />
+    <ClCompile Include="Sample.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JCoreLib\JCoreLib.vcxproj">
+      <Project>{3ad30ece-7b2f-4244-8b3a-5e74766b37c5}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

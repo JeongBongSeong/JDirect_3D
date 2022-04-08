@@ -239,6 +239,23 @@ bool	JDxObject::Frame()
 bool	JDxObject::Render()
 {
 	PreRender();
+	Draw();
+	PostRender();
+	return true;
+}
+
+bool	JDxObject::PreRender()
+{
+	if (m_pColorTex != nullptr)
+		m_pContext->PSSetShaderResources(0, 1,
+			m_pColorTex->m_pSRV.GetAddressOf());
+	if (m_pMaskTex != nullptr)
+		m_pContext->PSSetShaderResources(1, 1,
+			m_pMaskTex->m_pSRV.GetAddressOf());
+	return true;
+}
+bool JDxObject::Draw()
+{
 
 	m_pContext->UpdateSubresource(
 		m_pConstantBuffer, 0, NULL, &m_ConstantList, 0, 0);
@@ -288,18 +305,6 @@ bool	JDxObject::Render()
 		//D3D_PRIMITIVE_TOPOLOGY_POINTLIST
 		//D3D_PRIMITIVE_TOPOLOGY_LINELIST
 	);
-
-	PostRender();
-	return true;
-}
-bool	JDxObject::PreRender()
-{
-	if (m_pColorTex != nullptr)
-		m_pContext->PSSetShaderResources(0, 1,
-			m_pColorTex->m_pSRV.GetAddressOf());
-	if (m_pMaskTex != nullptr)
-		m_pContext->PSSetShaderResources(1, 1,
-			m_pMaskTex->m_pSRV.GetAddressOf());
 	return true;
 }
 bool	JDxObject::PostRender()

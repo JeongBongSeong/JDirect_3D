@@ -8,6 +8,7 @@ public:
 public:
 	int		m_iIndex;
 	ID3D11Device* m_pd3dDevice;
+	ID3D11DeviceContext* m_pContext;
 	std::map<std::wstring, std::shared_ptr<T> >  m_list;
 public:
 	std::wstring Splitpath(std::wstring path, std::wstring entry);
