@@ -4,7 +4,7 @@
 using CollisionPlayerFunction = std::function<void(JBaseObject*, DWORD)>;
 using CollisionFunction = std::function<void(JBaseObject*, DWORD)>;
 using SelectFunction = std::function<void(JBaseObject*, DWORD)>;
-class JObjectMgr : public JSingleton<JFbxImporter, JObjectMgr>
+class JObjectMgr : public JBaseMgr<JFbxImporter, JObjectMgr>
 {
 	friend class JSingleton<JTextureMgr>;
 private:

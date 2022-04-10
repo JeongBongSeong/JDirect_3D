@@ -177,11 +177,15 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClCompile Include="JDevice.cpp" />
     <ClCompile Include="JDxObject.cpp" />
     <ClCompile Include="JDxState.cpp" />
+    <ClCompile Include="JFbxImporter.cpp" />
+    <ClCompile Include="JFbxModel.cpp" />
+    <ClCompile Include="JFbxVertexLoader.cpp" />
     <ClCompile Include="JFrustum.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="JInput.cpp" />
+    <ClCompile Include="JMap.cpp" />
     <ClCompile Include="JMatrix.cpp" />
     <ClCompile Include="JObject2D.cpp" />
     <ClCompile Include="JObject3D.cpp" />
@@ -214,11 +218,14 @@ copy "*.h" "..\\..\\JCoreLib\\include"</Command>
     <ClInclude Include="JDevice.h" />
     <ClInclude Include="JDxObject.h" />
     <ClInclude Include="JDxState.h" />
+    <ClInclude Include="JFbxImporter.h" />
+    <ClInclude Include="JFbxLoader.h" />
     <ClInclude Include="JFrustum.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="JInput.h" />
+    <ClInclude Include="JMap.h" />
     <ClInclude Include="JMatrix.h" />
     <ClInclude Include="JObject2D.h" />
     <ClInclude Include="JObject3D.h" />

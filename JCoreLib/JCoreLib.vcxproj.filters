@@ -22,6 +22,9 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{00313a05-801c-4116-a767-1bc3a68db481}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fbx">
+      <UniqueIdentifier>{0da8ef97-9218-459e-91a2-86b546ad75f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="JCore.cpp">
@@ -101,6 +104,18 @@
     </ClCompile>
     <ClCompile Include="JPlaneObj.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="JMap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="JFbxVertexLoader.cpp">
+      <Filter>Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="JFbxModel.cpp">
+      <Filter>Fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="JFbxImporter.cpp">
+      <Filter>Fbx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="JSkyObj.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="JMap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="JFbxImporter.h">
+      <Filter>Fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="JFbxLoader.h">
+      <Filter>Fbx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

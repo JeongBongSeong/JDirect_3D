@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="JMap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="JNode.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -33,40 +30,22 @@
     <ClInclude Include="Sample.h">
       <Filter>fbx</Filter>
     </ClInclude>
-    <ClInclude Include="JFbxLoader.h">
-      <Filter>fbx</Filter>
-    </ClInclude>
     <ClInclude Include="JFbxObj.h">
       <Filter>fbx</Filter>
     </ClInclude>
-    <ClInclude Include="JFbxImporter.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JMap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="JNode.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="JQuadTree.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="JFbxImporter.cpp">
-      <Filter>fbx</Filter>
-    </ClCompile>
     <ClCompile Include="Sample.cpp">
-      <Filter>fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="JFbxVertexLoader.cpp">
       <Filter>fbx</Filter>
     </ClCompile>
     <ClCompile Include="JFbxObj.cpp">
       <Filter>fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="JFbxModel.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

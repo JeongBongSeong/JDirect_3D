@@ -1,5 +1,5 @@
 ﻿#include "Sample.h"
-
+#include "JObjectMgr.h"
 //Remote: error: File lib / libfbxsdk - md.lib is 257.27 MB; this exceeds GitHub's file size limit of 100.00 MB        
 //Remote: error: File lib / libfbxsdk - mt.lib is 282.44 MB; this exceeds GitHub's file size limit of 100.00 MB  
 
@@ -17,26 +17,26 @@ bool	Sample::Init()
 
 
 
-	std::vector<std::string> listname;
-	listname.push_back("../../data/fbx/SM_Barrel.fbx");
-	listname.push_back("../../data/fbx/SM_Rock.fbx");
-	listname.push_back("../../data/fbx/MultiCameras.fbx");
-	listname.push_back("../../data/fbx/st00sc00.fbx");
-	listname.push_back("../../data/fbx/SM_Tree_Var01.fbx");
-	listname.push_back("../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx");
-	//listname.push_back("../../data/fbx/Man.fbx");
+	std::vector<std::wstring> listname;
+	listname.push_back(L"../../data/fbx/SM_Barrel.fbx");
+	listname.push_back(L"../../data/fbx/SM_Rock.fbx");
+	listname.push_back(L"../../data/fbx/MultiCameras.fbx");
+	listname.push_back(L"../../data/fbx/st00sc00.fbx");
+	listname.push_back(L"../../data/fbx/SM_Tree_Var01.fbx");
+	listname.push_back(L"../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx");
+	//listname.push_back(L"../../data/fbx/Man.fbx");
 
 	I_ObjectMgr.Set(m_pd3dDevice.Get(), m_pImmediateContext.Get());
 	m_FbxObj.resize(listname.size());
 
-	for(int iObj1=0; iObj1 < listname.size(); iObj1++)
+	for(int iObj=0; iObj < listname.size(); iObj++)
 	{
-		JFbxImporter* fbx = &m_FbxObj[iObj1];
+		JFbx* fbx = &m_FbxObj[iObj];
 		fbx->m_pd3dDevice = m_pd3dDevice.Get();
 		fbx->m_pContext = m_pImmediateContext.Get();
 		fbx->m_pImporter = I_ObjectMgr.Load(listname[iObj]);
 		fbx->m_DrawList.resize(fbx->m_pImporter->m_DrawList.size());
-		fbx->SetPosition(T::TVector3(iObj1 * 100.0f, 0, 0));
+		fbx->SetPosition(T::TVector3(iObj * 100.0f, 0, 0));
 		fbx->Init();
 		//fbx->Load(listname[iObj1]);
 		//fbx->CreateConstantBuffer(m_pd3dDevice.Get());
@@ -46,7 +46,7 @@ bool	Sample::Init()
 		//	m_pd3dDevice.Get(), L"..\\..\\data\\shader\\Box.hlsl", "PS");
 		for (int iDraw = 0; iDraw < fbx->m_pImporter->m_DrawList.size(); iDraw++)
 		{
-			pFbx->m_pImporter->m_DrawList[iDraw]->m_pContext = m_pImmediateContext.Get();
+			fbx->m_pImporter->m_DrawList[iDraw]->m_pContext = m_pImmediateContext.Get();
 			/*
 			fbx->m_DrawList[iObj2]->Init();
 			fbx->m_DrawList[iObj2]->m_pColorTex = I_Texture.Load(fbx->m_DrawList[iObj2]->m_szTexFileName);

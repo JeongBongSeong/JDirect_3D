@@ -79,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\\..\\output\\Debug\\</OutDir>
-    <IntDir>..\\..\\output\\Debug\\SampleFBXLoader\\</IntDir>
+    <IntDir>..\\..\\output\\Debug\\SampleFBXLoader_01\\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -144,20 +144,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="JFbxLoader.h" />
-    <ClInclude Include="JFbxImporter.h" />
     <ClInclude Include="JFbxObj.h" />
-    <ClInclude Include="JMap.h" />
     <ClInclude Include="JNode.h" />
     <ClInclude Include="JQuadTree.h" />
     <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JFbxImporter.cpp" />
-    <ClCompile Include="JFbxModel.cpp" />
     <ClCompile Include="JFbxObj.cpp" />
-    <ClCompile Include="JFbxVertexLoader.cpp" />
-    <ClCompile Include="JMap.cpp" />
     <ClCompile Include="JNode.cpp" />
     <ClCompile Include="JQuadTree.cpp" />
     <ClCompile Include="Sample.cpp" />
