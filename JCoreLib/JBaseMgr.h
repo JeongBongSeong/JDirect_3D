@@ -71,7 +71,7 @@ T* JBaseMgr<T, S>::Load(std::wstring filename)
 	}
 
 	std::shared_ptr<T> pNewData = std::make_shared<T>();
-	if (pNewData->Load(m_pd3dDevice, filename) == false)
+	if (pNewData->Load(m_pd3dDevice, filename) == false)	//파일 로드 및 초기화 작업
 	{
 		return nullptr;
 	}

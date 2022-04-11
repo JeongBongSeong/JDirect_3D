@@ -14,15 +14,12 @@ void	Sample::DeleteResizeDevice(UINT iWidth, UINT iHeight)
 }
 bool	Sample::Init()
 {
-
-
-
 	std::vector<std::wstring> listname;
-	listname.push_back(L"../../data/fbx/SM_Barrel.fbx");
+	/*listname.push_back(L"../../data/fbx/SM_Barrel.fbx");
 	listname.push_back(L"../../data/fbx/SM_Rock.fbx");
 	listname.push_back(L"../../data/fbx/MultiCameras.fbx");
 	listname.push_back(L"../../data/fbx/st00sc00.fbx");
-	listname.push_back(L"../../data/fbx/SM_Tree_Var01.fbx");
+	listname.push_back(L"../../data/fbx/SM_Tree_Var01.fbx");*/
 	listname.push_back(L"../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx");
 	//listname.push_back(L"../../data/fbx/Man.fbx");
 
@@ -139,7 +136,7 @@ bool	Sample::Render()
 		//			&m_pMainCamera->m_matView,
 		//			&m_pMainCamera->m_matProj);*/
 
-		m_FbxObj[iObj].SetMatrix(nullptr, &m_pMainCamera->m_matView,	&m_pMainCamera->m_matProj);
+		m_FbxObj[iObj].SetMatrix(&m_FbxObj[iObj].m_matWorld, &m_pMainCamera->m_matView, &m_pMainCamera->m_matProj);
 		m_FbxObj[iObj].Render();
 	}
 	std::wstring msg = L"FPS:";
