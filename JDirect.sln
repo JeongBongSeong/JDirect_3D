@@ -82,6 +82,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JCoreClientDir", "JCoreClientDir", "{00462A92-84F0-41B3-943F-7A535DBAF0E4}"
 	ProjectSection(SolutionItems) = preProject
 		..\data\shader\Box.hlsl = ..\data\shader\Box.hlsl
+		..\data\shader\Character.hlsl = ..\data\shader\Character.hlsl
 		..\data\shader\Map.hlsl = ..\data\shader\Map.hlsl
 		..\data\shader\SkyObj.hlsl = ..\data\shader\SkyObj.hlsl
 	EndProjectSection

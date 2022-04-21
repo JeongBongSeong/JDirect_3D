@@ -13,7 +13,6 @@ class Sample : public JCore
 {
 public:
 	std::vector<JFbx> m_FbxObj;
-	JSkyObj m_SkyObj;
 public:
 	virtual void	CreateResizeDevice(UINT iWidth, UINT iHeight) override;
 	virtual void	DeleteResizeDevice(UINT iWidth, UINT iHeight) override;
