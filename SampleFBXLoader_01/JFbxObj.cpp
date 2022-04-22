@@ -2,29 +2,29 @@
 #include "JFbxObj.h"
 bool	JFbx::Init()
 {
+	m_fTime = 61;
 	return true;
 }
 bool	JFbx::Frame()
 {
-	/*m_fTime += g_fSecPerFrame * m_pImporter->m_Scene.iFrameSpeed * m_fDir * m_fSpeed;
-	if (m_fTime >= m_pImporter->m_Scene.iEnd)
+	/*m_fTime += g_fSecPerFrame * m_pMeshImp->m_Scene.iFrameSpeed * m_fDir * m_fSpeed;
+	if (m_fTime >= m_pMeshImp->m_Scene.iEnd)
 	{
 		m_fDir *= -1.0f;
 	}
-	if (m_fTime <= m_pImporter->m_Scene.iStart)
+	if (m_fTime <= m_pMeshImp->m_Scene.iStart)
 	{
 		m_fDir *= -1.0f;
 	}
 	int iFrame = m_fTime;
-	iFrame = max(0, min(m_pImporter->m_Scene.iEnd, iFrame));*/
-	/*for (int iObj = 0; iObj < m_pImporter->m_TreeList.size(); iObj++)
+	iFrame = max(0, min(m_pMeshImp->m_Scene.iEnd, iFrame));*/
+	/*for (int iObj = 0; iObj < m_pMeshImp->m_TreeList.size(); iObj++)
 	{
-
-		JFbxModel* pObject = m_pImporter->m_TreeList[iObj];
+		JFbxModel* pObject = m_pMeshImp->m_TreeList[iObj];
 		if (pObject->m_AnimTrack.size() > 0)
 		{
-			auto binepose = pObject->m_dxMatrixBindPoseMap.find(pObject->m_iIndex);
-			if (binepose != pObject->m_dxMatrixBindPoseMap.end())
+			auto binepose = pObject->m_matBindPoseMap.find(pObject->m_iIndex);
+			if (binepose != pObject->m_matBindPoseMap.end())
 			{
 				T::TMatrix matInverseBindpose = binepose->second;
 				m_matBoneArray.matBoneWorld[iObj] =
@@ -37,65 +37,104 @@ bool	JFbx::Frame()
 					pObject->m_AnimTrack[iFrame].matTrack;
 			}
 		}
-		T::D3DXMatrixTranspose(&m_matBoneArray.matBoneWorld[iObj], &m_matBoneArray.matBoneWorld[iObj]);
-	}*/
+		T::D3DXMatrixTranspose(&m_matBoneArray.matBoneWorld[iObj],&m_matBoneArray.matBoneWorld[iObj]);
+	}	*/
 	return true;
+}
+T::TMatrix JFbx::Interplate(JFbxImporter* pAnimImp, JFbxModel* pModel, float fTime)
+{
+	T::TMatrix matAnim;
+	JScene tScene = pAnimImp->m_Scene;
+	int iStart = max(tScene.iStart, fTime);
+	int iEnd = min(tScene.iEnd, fTime + 1);
+
+	JTrack A = pModel->m_AnimTrack[iStart];
+	JTrack B = pModel->m_AnimTrack[iEnd];
+	float s = fTime - (float)iStart; // 0~1
+	T::TVector3 pos;
+	T::D3DXVec3Lerp(&pos, &A.t, &B.t, s);
+	T::TVector3 scale;
+	T::D3DXVec3Lerp(&scale, &A.s, &B.s, s);
+	T::TQuaternion rotation;
+	T::D3DXQuaternionSlerp(&rotation, &A.r, &B.r, s);
+	T::TMatrix matScale;
+	T::D3DXMatrixScaling(&matScale, scale.x, scale.y, scale.z);
+	T::TMatrix matRotation;
+	T::D3DXMatrixRotationQuaternion(&matRotation, &rotation);
+
+	matAnim = matScale * matRotation;
+	matAnim._41 = pos.x;
+	matAnim._42 = pos.y;
+	matAnim._43 = pos.z;
+	//T::TMatrix matTrans;
+	//T::D3DXMatrixTranslation(&matTrans, pos.x, pos.y, pos.z);
+	//matAnim = pModel->m_AnimTrack[(int)fTime].matTrack;
+	return matAnim;
 }
 bool	JFbx::Render()
 {
-	m_fTime += g_fSecPerFrame * m_pImporter->m_Scene.iFrameSpeed * m_fDir * m_fSpeed;
-	if (m_fTime >= m_pImporter->m_Scene.iEnd)
+	JFbxImporter* pAnimImp = nullptr;
+	if (m_pAnimImporter != nullptr)
 	{
-		m_fDir *= -1.0f;
+		pAnimImp = m_pAnimImporter;
 	}
-	if (m_fTime <= m_pImporter->m_Scene.iStart)
+	else
 	{
-		m_fDir *= -1.0f;
+		pAnimImp = m_pMeshImp;
+	}
+	m_fTime += g_fSecPerFrame * pAnimImp->m_Scene.iFrameSpeed * m_fDir * 0.33f;//m_fSpeed;
+	if (m_fTime >= pAnimImp->m_Scene.iEnd)
+	{
+		//m_fDir *= -1.0f;
+		m_fTime = pAnimImp->m_Scene.iStart;
 	}
 	int iFrame = m_fTime;
-	iFrame = max(0, min(m_pImporter->m_Scene.iEnd, iFrame));
+	iFrame = max(0, min(pAnimImp->m_Scene.iEnd-1, iFrame));
 
-	for (int iObj = 0; iObj < m_pImporter->m_DrawList.size(); iObj++)
+	for (int iObj = 0; iObj < m_pMeshImp->m_DrawList.size(); iObj++)
 	{
-		JFbxModel* pFbxObj = m_pImporter->m_DrawList[iObj];
+		JFbxModel* pFbxObj = m_pMeshImp->m_DrawList[iObj];
 
 		if (pFbxObj->m_bSkinned)
 		{
-			int iTree = 0;
-			for (auto& bone : pFbxObj->m_dxMatrixBindPoseMap)
+			for (auto data : pAnimImp->m_pFbxModelMap)
 			{
-				int iBoneIndex = bone.first;
-				JFbxModel* pFbxtree = m_pImporter->m_TreeList[iBoneIndex];
-				if (pFbxtree->m_AnimTrack.size() > 0)
+				std::wstring name = data.first;
+				JFbxModel* pAnimModel = data.second;
+				auto model = m_pMeshImp->m_pFbxModelMap.find(name);
+				if (model == m_pMeshImp->m_pFbxModelMap.end())
 				{
-					auto binepose = pFbxObj->m_dxMatrixBindPoseMap.find(pFbxtree->m_iIndex);
-					if (binepose != pFbxObj->m_dxMatrixBindPoseMap.end())
-					{
-						TMatrix matInverseBindpose = binepose->second;
-						m_matBoneArray.matBoneWorld[iBoneIndex] =
-							matInverseBindpose *
-							pFbxtree->m_AnimTrack[iFrame].matTrack;
-					}
-					else
-					{
-						m_matBoneArray.matBoneWorld[iBoneIndex] =
-							pFbxtree->m_AnimTrack[iFrame].matTrack;
-					}
+					continue; // error
 				}
-				T::D3DXMatrixTranspose(&m_matBoneArray.matBoneWorld[iBoneIndex],
-					&m_matBoneArray.matBoneWorld[iBoneIndex]);
-				iTree++;
+				JFbxModel* pTreeModel = model->second;
+				if (pTreeModel == nullptr)
+				{
+					continue; // error
+				}
+				auto binepose = pFbxObj->m_dxMatrixBindPoseMap.find(name);
+				if (binepose != pFbxObj->m_dxMatrixBindPoseMap.end() && pAnimModel)
+				{
+					TMatrix matInverseBindpose = binepose->second;
+					m_matBoneArray.matBoneWorld[pTreeModel->m_iIndex] =
+						matInverseBindpose *
+						Interplate(pAnimImp, pAnimModel, m_fTime);
+					//pAnimModel->m_AnimTrack[iFrame].matTrack;
+				}
+				T::D3DXMatrixTranspose(&m_matBoneArray.matBoneWorld[pTreeModel->m_iIndex],
+					&m_matBoneArray.matBoneWorld[pTreeModel->m_iIndex]);
+
 			}
 		}
 		else
 		{
-			for (int inode = 0; inode < m_pImporter->m_TreeList.size(); inode++)
+			for (int inode = 0; inode < m_pMeshImp->m_TreeList.size(); inode++)
 			{
-				JFbxModel* pFbxtree = m_pImporter->m_TreeList[inode];
-				if (pFbxtree->m_AnimTrack.size() > 0)
+				JFbxModel* pFbxModel = m_pMeshImp->m_TreeList[inode];
+				if (pFbxModel->m_AnimTrack.size() > 0)
 				{
 					m_matBoneArray.matBoneWorld[inode] =
-						pFbxtree->m_AnimTrack[iFrame].matTrack;
+						Interplate(pAnimImp, pFbxModel, m_fTime);
+					//pFbxModel->m_AnimTrack[iFrame].matTrack;
 
 				}
 				T::D3DXMatrixTranspose(&m_matBoneArray.matBoneWorld[inode],
@@ -103,8 +142,8 @@ bool	JFbx::Render()
 			}
 		}
 
-		m_pContext->UpdateSubresource(m_pImporter->m_pBoneCB, 0, NULL, &m_matBoneArray, 0, 0);
-		m_pContext->VSSetConstantBuffers(2, 1, &m_pImporter->m_pBoneCB);
+		m_pContext->UpdateSubresource(m_pMeshImp->m_pBoneCB, 0, NULL, &m_matBoneArray, 0, 0);
+		m_pContext->VSSetConstantBuffers(2, 1, &m_pMeshImp->m_pBoneCB);
 
 		T::TVector3 vLight(cosf(g_fGameTimer) * 100.0f, 100, sinf(g_fGameTimer) * 100.0f);
 		T::D3DXVec3Normalize(&vLight, &vLight);

@@ -66,6 +66,9 @@ void		JFbxImporter::ParseAnimation()
 			FbxAMatrix matGlobal = m_TreeList[iObj]->m_pFbxNode->EvaluateGlobalTransform(time);
 			tTrack.iFrame = t;
 			tTrack.matTrack = DxConvertMatrix(ConvertAMatrix(matGlobal));
+			// 행렬분해
+			// 행렬을 분해(SRT)
+			T::D3DXMatrixDecompose(&tTrack.s, &tTrack.r, &tTrack.t, &tTrack.matTrack);
 			m_TreeList[iObj]->m_AnimTrack.push_back(tTrack);
 		}
 	}
@@ -84,7 +87,8 @@ void    JFbxImporter::PreProcess(FbxNode* node, JFbxModel* fbxParent)
 		fbx->m_pParentObj = fbxParent;			//해당 fbx의 부모 fbx를 넣는다.  (위 노드의 부모를 저장하고있는 JFbxObj정보이다.)
 		fbx->m_iIndex = m_TreeList.size();		//현재 트리리스트의 크기 즉 순서대로 들어온 값
 		m_TreeList.push_back(fbx);
-		m_pFbxNodeMap.insert(std::make_pair(node, m_pFbxNodeMap.size()));
+		m_pFbxNodeMap.insert(std::make_pair(node, fbx->m_iIndex));
+		m_pFbxModelMap.insert(std::make_pair(fbx->m_csName, fbx));
 	}
 
 	// camera, light, mesh, shape, animation
@@ -166,14 +170,13 @@ bool JFbxImporter::ParseMeshSkinning(FbxMesh* pFbxMesh, JFbxModel* pObject)
 
 			T::TMatrix matInvBindPos = DxConvertMatrix(ConvertMatrix(matBindPose));
 			matInvBindPos = matInvBindPos.Invert();
-			int iMapIndex = m_pFbxNodeMap.find(pCluster->GetLink())->second;
-			std::string name = pCluster->GetLink()->GetName();
-			//m_dxMatrixBindPoseMap.insert(make_pair(iMapIndex, matInvBindPos));
-			pObject->m_dxMatrixBindPoseMap.insert(make_pair(iMapIndex, matInvBindPos));
+			int  iBoneIndex = m_pFbxNodeMap.find(pCluster->GetLink())->second;
+			std::wstring name = m_TreeList[iBoneIndex]->m_csName;
+			pObject->m_dxMatrixBindPoseMap.insert(make_pair(name, matInvBindPos));
 
-			int  dwClusterSize = pCluster->GetControlPointIndicesCount();
-			auto data = m_pFbxNodeMap.find(pCluster->GetLink());
-			int  iBoneIndex = data->second;
+
+			int dwClusterSize = pCluster->GetControlPointIndicesCount();
+
 			// 영향을 받는 정점들의 인덱스
 			int* pIndices = pCluster->GetControlPointIndices();
 			double* pWeights = pCluster->GetControlPointWeights();

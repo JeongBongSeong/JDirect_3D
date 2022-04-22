@@ -22,7 +22,8 @@ bool	Sample::Init()
 	listname.push_back(L"../../data/fbx/MultiCameras.fbx");
 	listname.push_back(L"../../data/fbx/st00sc00.fbx");
 	listname.push_back(L"../../data/fbx/SM_Tree_Var01.fbx");*/
-	//listname.push_back(L"../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx");
+	listname.push_back(L"../../data/fbx/Greystone.fbx");
+	listname.push_back(L"../../data/fbx/idle.fbx");
 	listname.push_back(L"../../data/fbx/Turret_Deploy1/Turret_Deploy1.fbx");
 
 	I_ObjectMgr.Set(m_pd3dDevice.Get(), m_pImmediateContext.Get());
@@ -31,18 +32,19 @@ bool	Sample::Init()
 	for(int iObj=0; iObj < listname.size(); iObj++)
 	{
 		JFbx* fbx = &m_FbxObj[iObj];
-		fbx->m_fTime = 0;
+		fbx->Init();
 		fbx->m_pd3dDevice = m_pd3dDevice.Get();
 		fbx->m_pContext = m_pImmediateContext.Get();
-		fbx->m_pImporter = I_ObjectMgr.Load(listname[iObj]);
-		fbx->m_DrawList.resize(fbx->m_pImporter->m_DrawList.size());
+		fbx->m_pMeshImp = I_ObjectMgr.Load(listname[iObj]);
+		fbx->m_DrawList.resize(fbx->m_pMeshImp->m_DrawList.size());
 		fbx->SetPosition(T::TVector3(iObj * 100.0f, 0, 0));
-		for (int iDraw = 0; iDraw < fbx->m_pImporter->m_DrawList.size(); iDraw++)
+		for (int iDraw = 0; iDraw < fbx->m_pMeshImp->m_DrawList.size(); iDraw++)
 		{
-			fbx->m_pImporter->m_DrawList[iDraw]->m_pContext = m_pImmediateContext.Get();
+			fbx->m_pMeshImp->m_DrawList[iDraw]->m_pContext = m_pImmediateContext.Get();
 		}
 	}
 
+	m_FbxObj[0].m_pAnimImporter = m_FbxObj[1].m_pMeshImp;
 	m_pMainCamera->CreateViewMatrix(T::TVector3(0, 25.0f, -50.0f),
 		T::TVector3(0, 0.0f, 0));
 

@@ -26,6 +26,10 @@ struct JTrack
 {
 	UINT	iFrame;
 	T::TMatrix matTrack;
+	// SRT
+	T::TVector3	   s;
+	T::TQuaternion r;
+	T::TVector3    t;
 };
 
 struct JWeight
@@ -81,7 +85,8 @@ public:
 	std::vector<JTexture*>		 m_pTextureList;
 
 	std::vector<JTrack>			m_AnimTrack;
-	std::map<int, T::TMatrix> m_dxMatrixBindPoseMap;
+	std::map<std::wstring, T::TMatrix> m_dxMatrixBindPoseMap;
+	T::TMatrix aaa[255];
 public:
 	virtual bool    SetVertexData() override;
 	virtual bool	CreateVertexBuffer()override;
@@ -114,8 +119,8 @@ public:
 	FbxScene* m_pFbxScene;
 	FbxNode* m_pRootNode;
 
-	std::map<int, T::TMatrix> m_dxMatrixBindPoseMap;
 	std::map<FbxNode*, int> m_pFbxNodeMap;
+	std::map<std::wstring, JFbxModel*> m_pFbxModelMap;
 
 public:
 	std::vector<JFbxModel*> m_DrawList;	//°ú°Å OBJ
